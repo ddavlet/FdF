@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/19 11:49:10 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:53:48 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	clear_exit(char **ptr, int error) // what is that for?
 	}
 }
 
-uint32_t	limits(int num, int max)
+uint32_t	limits(uint32_t num, uint32_t max)
 {
 	if (num > max)
 		return (max);

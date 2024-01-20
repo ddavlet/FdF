@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 11:21:49 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:58:51 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,10 @@ void		free_coords(t_coords **coords);
 /* Other utils*/
 uint32_t	ft_arraystrlen(char **array);
 void		clear_exit(char **ptr, int error);
-uint32_t	limits(int num, int max);
+uint32_t	limits(uint32_t num, uint32_t max);
 void		min_max_img(t_vars *vars);
 uint32_t	iso(uint32_t x, uint32_t y, uint32_t z, char axes);
+int			min_max_point(t_vars *vars);
 
 /*Hooks*/
 void		ft_hook_scroll(double xdelta, double ydelta, void *param);

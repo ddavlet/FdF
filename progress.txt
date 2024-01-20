@@ -1,0 +1,6 @@
+my points are unsigned int, they go less than 0
+my plan is first declare all iso points and than draw image for it
+protect my x from going less than 0 and turn picture back
+init_point function, change step
+new idea! I can first initialize tiny picture with 2-3 pixels between points 
+and than increase distance untill I meet some width and height 

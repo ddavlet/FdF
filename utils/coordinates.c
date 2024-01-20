@@ -6,19 +6,23 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 11:27:35 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/20 20:05:07 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	free_points(t_points *points)
+void	free_points(t_points **points)
 {
-	while (points)
+	t_points	*tmp;
+
+	tmp = *points;
+	while (tmp)
 	{
-		free(points);
-		points = points->next;
+		free(tmp);
+		tmp = tmp->next;
 	}
+	*points = NULL;
 }
 
 t_points	*init_point(t_points **points, uint32_t x,
@@ -48,7 +52,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 	return (point);
 }
 
-int	check_boundaries(t_vars *vars)
+int	check_boundaries(t_vars *vars) //what it does?
 {
 	t_coords	*coords;
 	t_points	*tmp;
@@ -76,22 +80,19 @@ t_points	*init_points(t_coords *coords, uint32_t step_x,
 	i = 0;
 
 	points = coords->points;
-	free_points(coords->points);
 	while ((coords->coordinate)[i])
 	{
 		points = init_point(&coords->points, step_x * (i + 1), step_y * line,
 				(uint32_t)ft_atoi((coords->coordinate)[i]) * 6); // change z multiplier
 		if (!points)
 		{
-			free_points(coords->points);
-			return (NULL);
+			free_points(&coords->points);
+			return (NULL); // dela with this NULL
 		}
 		i++;
 		points->next = NULL;
 		points = points->next;
 	}
-	// if (check_boundaries(vars))
-	// 	init_points(vars, step_x - 3, step_y - 3, line); //reallocating memory here
 	return (coords->points);
 }
 
@@ -104,8 +105,9 @@ void	init_pointcoord(t_coords **coords, t_vars *vars)
 	coord = *coords;
 	while (coord)
 	{
-		coord->points = init_points(coord, vars->width / vars->x - vars->zoom, // change to varialbes to use zoom
-				vars->height / vars->y - vars->zoom, i); // change to varialbes to use zoom
+		free_points(&coord->points);
+		coord->points = init_points(coord, limits(vars->x, 1920) / vars->x - vars->zoom, // change to varialbes to use zoom
+				limits(vars->y, 1080) / vars->y - vars->zoom, i); // change to varialbes to use zoom
 		coord = coord->next;
 		i++;
 	}
@@ -187,7 +189,7 @@ void	free_coords(t_coords **coords)
 	while (coord)
 	{
 		free_coordinates(coord->coordinate);
-		free_points(coord->points);
+		free_points(&coord->points);
 		free(coord);
 		coord = coord->next;
 	}

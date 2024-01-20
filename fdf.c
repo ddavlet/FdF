@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 11:00:47 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:25:13 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
 	draw_pixel(pixelstart, color);
 }
 
-void	draw_line(t_vars *vars, t_points *column)
+void	draw_line_negslope(t_vars *vars, t_points *column)
 {
 	long		d_y;
 	long		d_x;
@@ -48,13 +48,43 @@ void	draw_line(t_vars *vars, t_points *column)
 	uint32_t	x;
 	uint32_t	y;
 
-	d_y = (long)column->next->iso_y - (long)column->iso_y; // should never overflow because of screen limit
-	d_x = (long)column->next->iso_x - (long)column->iso_x; // should never overflow because of screen limit
+	d_x = (long)column->iso_x - (long)column->next->iso_x; // should never overflow because of screen limit
+	d_y = (long)column->iso_y - (long)column->next->iso_y; // should never overflow because of screen limit
+	x = column->next->iso_x;
+	y = column->next->iso_y;
 	slope_error = 2 * labs(d_y) - d_x;
+	while (x < column->iso_x) //change this for negative/positive only
+	{
+		if (slope_error > 0)
+		{
+			if (d_y > 0)
+				y++;
+			else
+				y--;
+			slope_error += 2 * (labs(d_y) - d_x);
+		}
+		else
+			slope_error += 2 * d_y;
+		x++;
+		put_pixel(vars->img, x, y, 0xFFFFFFFF);
+	}
+}
+
+/*iso_x and iso_y should never overflow because of screen limit*/
+void	draw_line_slope(t_vars *vars, t_points *column)
+{
+	long		d_y;
+	long		d_x;
+	long		slope_error;
+	uint32_t	x;
+	uint32_t	y;
+
+	d_x = (long)column->next->iso_x - (long)column->iso_x; // should never overflow because of screen limit
+	d_y = (long)column->next->iso_y - (long)column->iso_y; // should never overflow because of screen limit
 	x = column->iso_x;
 	y = column->iso_y;
-	put_pixel(vars->img, x, y, 0xFFFFFFFF);
-	while (x != column->next->iso_x) //change this for negative/positive only
+	slope_error = 2 * labs(d_y) - d_x;
+	while (x < column->next->iso_x) //change this for negative/positive only
 	{
 		if (slope_error > 0)
 		{
@@ -66,10 +96,7 @@ void	draw_line(t_vars *vars, t_points *column)
 		}
 		else
 			slope_error += 2 * labs(d_y);
-		if (d_x > 0) // open this
-			x++;
-		else
-			x--;
+		x++;
 		put_pixel(vars->img, x, y, 0xFFFFFFFF);
 	}
 }
@@ -85,7 +112,8 @@ void	put_iso_line(t_vars *vars)
 		point = coord->points;
 		while (point->next)
 		{
-			draw_line(vars, point);
+			draw_line_slope(vars, point);
+			draw_line_negslope(vars, point);
 			put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF); // delete
 			point = point->next;
 		}
@@ -93,7 +121,7 @@ void	put_iso_line(t_vars *vars)
 	}
 }
 
-void	draw_column_111(t_vars *vars, t_points *line, t_points *next_line)
+void	draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line)
 {
 	long		d_y;
 	long		d_x;
@@ -101,28 +129,12 @@ void	draw_column_111(t_vars *vars, t_points *line, t_points *next_line)
 	uint32_t	x;
 	uint32_t	y;
 
-	//test
-
-
-	//test
-
-	d_y = (long)next_line->iso_y - (long)line->iso_y; // should never overflow because of screen limit
-	d_x = (long)next_line->iso_x - (long)line->iso_x; // should never overflow because of screen limit
-	slope_error = d_x - 2 * labs(d_y);
-	x = line->iso_x;
-	y = line->iso_y;
-// 		if (x > next_line->iso_x) {
-//     // Swap the coordinates if needed
-//    	 int temp = x;
-//     x = next_line->iso_x;
-//     next_line->iso_x = temp;
-
-//     temp = y;
-//     y = next_line->iso_y;
-//     next_line->iso_y = temp;
-// }
-	put_pixel(vars->img, x, y, 0xFFFFFFFF);
-	while (y != next_line->iso_y)
+	d_y = (long)line->iso_y - (long)next_line->iso_y; // should never overflow because of screen limit
+	d_x = (long)line->iso_x - (long)next_line->iso_x; // should never overflow because of screen limit
+	slope_error = 2 * labs(d_y) - d_x;
+	x = next_line->iso_x;
+	y = next_line->iso_y;
+	while (x < line->iso_x)
 	{
 		if (slope_error > 0)
 		{
@@ -130,14 +142,61 @@ void	draw_column_111(t_vars *vars, t_points *line, t_points *next_line)
 				y++;
 			else
 				y--;
-			slope_error += 2 * (d_y - labs(d_x));
+			slope_error += 2 * (labs(d_y) - d_x);
 		}
 		else
 			slope_error += 2 * labs(d_y);
 		if (d_x > 0)
 			x++;
-		else if (d_x < 0)
-			x--;
+		put_pixel(vars->img, x, y, 0xFFFFFFFF);
+	}
+}
+
+void	draw_column_line(t_vars *vars, t_points *line, t_points *next_line)
+{
+	long		d_y;
+	long		d_x;
+	uint32_t	x;
+	uint32_t	y;
+
+	d_y = (long)next_line->iso_y - (long)line->iso_y; // should never overflow because of screen limit
+	d_x = (long)next_line->iso_x - (long)line->iso_x; // should never overflow because of screen limit
+	x = line->iso_x;
+	y = line->iso_y;
+	if (d_x == 0)
+	{
+		while (y <= next_line->iso_y)
+			put_pixel(vars->img, x, y++, 0xFFFFFFFF);
+	}
+}
+
+void	draw_column_slope(t_vars *vars, t_points *line, t_points *next_line)
+{
+	long		d_y;
+	long		d_x;
+	long		slope_error;
+	uint32_t	x;
+	uint32_t	y;
+
+	d_y = (long)next_line->iso_y - (long)line->iso_y; // should never overflow because of screen limit
+	d_x = (long)next_line->iso_x - (long)line->iso_x; // should never overflow because of screen limit
+	slope_error = 2 * labs(d_y) - d_x;
+	x = line->iso_x;
+	y = line->iso_y;
+	while (x < next_line->iso_x)
+	{
+		if (slope_error > 0)
+		{
+			if (d_y > 0)
+				y++;
+			else
+				y--;
+			slope_error += 2 * (labs(d_y) - d_x);
+		}
+		else
+			slope_error += 2 * labs(d_y);
+		if (d_x > 0)
+			x++;
 		put_pixel(vars->img, x, y, 0xFFFFFFFF);
 	}
 }
@@ -153,7 +212,10 @@ void	draw_column(t_vars *vars, t_coords *coords)
 	next_point = coords->next->points;
 	while (i <= vars->x)
 	{
-		draw_column_111(vars, point, next_point);
+		draw_column_slope(vars, point, next_point);
+		draw_column_negslope(vars, point, next_point);
+		draw_column_line(vars, point, next_point);
+		put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF);
 		point = point->next;
 		next_point = next_point->next;
 		i++;
@@ -191,6 +253,9 @@ void	create_image(void *param)
 		x++;
 	}
 	x = 0;
+	while (min_max_point(vars))
+		init_pointcoord(&vars->coords, vars);
+	init_pointcoord(&vars->coords, vars);
 	put_iso_line(vars);
 	put_iso_column(vars);
 }
