@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 19:55:14 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:03:02 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ t_vars	*init_vars(char *file_name)
 	}
 	vars->x = 0;
 	vars->y = 0;
+	vars->z = 6;
 	vars->coords = NULL;
 	// vars->img = NULL;
 	// vars->mlx = NULL;
 	// vars->win = NULL;
 	parse_coordinates(file_name, vars); // check if width or height is 0
-	init_pointcoord(&vars->coords, vars);
 	vars->mlx = mlx_init(limits(vars->x, 1920),
 			limits(vars->y, 1080), WINDOW_NAME, RESIZEABLE);
 	if (!vars->mlx)
@@ -48,6 +48,7 @@ t_vars	*init_vars(char *file_name)
 	vars->width = vars->img->width;
 	vars->height = vars->img->height;
 	vars->zoom = 0;
+	init_pointcoord(&vars->coords, vars);
 	return (vars);
 }
 

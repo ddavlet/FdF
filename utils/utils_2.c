@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:32:17 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 19:59:20 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:22:30 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ uint32_t	iso(uint32_t x, uint32_t y, uint32_t z, char axes)
 	uint32_t	x_iso;
 	uint32_t	y_iso;
 
-	x_iso = (uint32_t)((float)x + (float)z / sqrt(2));
-	// y_iso = (x + 2 * y - z) / sqrt(5);
+	x_iso = (uint32_t)((float)x + (float)z / sqrt(2) + y / sqrt(2)); //change 2-3 to some angle
 	y_iso = (uint32_t)((float)y - (float)z / sqrt(2));
 	if (axes == 'x')
 		return (x_iso);
@@ -26,6 +25,7 @@ uint32_t	iso(uint32_t x, uint32_t y, uint32_t z, char axes)
 		return (y_iso);
 }
 
+/*Protection of iso point overflow is in zoom hook*/
 int	min_max_point(t_vars *vars)
 {
 	t_coords	*coord;

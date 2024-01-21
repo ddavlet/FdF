@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 19:58:51 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:10:38 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # endif
 
 # define SIZE 30
-# define ZOOM 10
 # define LAYOUT_WIDTH 0
 # define LAYOUT_HEIGHT 0
 # ifndef RESIZEABLE
@@ -68,6 +67,7 @@ typedef struct s_vars
 	uint32_t	zoom;
 	uint32_t	x;
 	uint32_t	y;
+	uint32_t	z;
 }				t_vars;
 
 
@@ -94,7 +94,7 @@ void		free_coords(t_coords **coords);
 uint32_t	ft_arraystrlen(char **array);
 void		clear_exit(char **ptr, int error);
 uint32_t	limits(uint32_t num, uint32_t max);
-void		min_max_img(t_vars *vars);
+// void		min_max_img(t_vars *vars);
 uint32_t	iso(uint32_t x, uint32_t y, uint32_t z, char axes);
 int			min_max_point(t_vars *vars);
 
@@ -110,5 +110,10 @@ int32_t		get_t(int32_t trgb);
 int32_t		get_r(int32_t trgb);
 int32_t		get_g(int32_t trgb);
 int32_t		get_b(int32_t trgb);
+
+/*Bresenhams line lgorithm drawers*/
+void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column);
+
+void	draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 19:53:48 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 18:21:31 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ uint32_t	limits(uint32_t num, uint32_t max)
 	return (num);
 }
 
-void	min_max_img(t_vars *vars)
-{
-	if (vars->height >= vars->img->height
-		|| vars->width >= vars->img->width)
-	{
-		vars->height = vars->img->height;
-		vars->width = vars->img->width;
-	}
-	if (vars->height <= ZOOM + 1
-		|| vars->width <= ZOOM + 1)
-	{
-		vars->height = ZOOM + 1;
-		vars->width = ZOOM + 1;
-	}
-}
+// void	min_max_img(t_vars *vars)
+// {
+// 	if (vars->height >= vars->img->height
+// 		|| vars->width >= vars->img->width)
+// 	{
+// 		vars->height = vars->img->height;
+// 		vars->width = vars->img->width;
+// 	}
+// 	if (vars->height <= ZOOM + 1
+// 		|| vars->width <= ZOOM + 1)
+// 	{
+// 		vars->height = ZOOM + 1;
+// 		vars->width = ZOOM + 1;
+// 	}
+// }
 
 // static void ft_error(void) //use this!
 // {

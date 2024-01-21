@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/20 20:05:07 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:13:12 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void	init_pointcoord(t_coords **coords, t_vars *vars)
 	while (coord)
 	{
 		free_points(&coord->points);
-		coord->points = init_points(coord, limits(vars->x, 1920) / vars->x - vars->zoom, // change to varialbes to use zoom
-				limits(vars->y, 1080) / vars->y - vars->zoom, i); // change to varialbes to use zoom
+		coord->points = init_points(coord, (vars->width - vars->zoom) / vars->x, // change to varialbes to use zoom
+				(vars->height - vars->zoom) / vars->y , i); // change to varialbes to use zoom
 		coord = coord->next;
 		i++;
 	}

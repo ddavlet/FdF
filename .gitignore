@@ -1,1 +1,5 @@
 .vscode
+glfw
+MLX42
+*.o
+
