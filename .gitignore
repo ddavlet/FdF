@@ -2,4 +2,5 @@
 glfw
 MLX42
 *.o
-
+fdf
+libft.a
