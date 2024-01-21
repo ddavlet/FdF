@@ -8,7 +8,7 @@ RM = rm -f
 RANNAME = ranlib $(NAME)
 UTILS_DIR = ./utils/
 SRC = fdf.c $(UTILS_DIR)colors.c $(UTILS_DIR)coordinates.c $(UTILS_DIR)vars.c $(UTILS_DIR)utils_1.c $(UTILS_DIR)hooks.c \
-			$(UTILS_DIR)utils_2.c
+			$(UTILS_DIR)utils_2.c $(UTILS_DIR)maths.c
 OBJ := $(SRC:.c=.o)
 
 all: $(LIBFT) $(NAME)

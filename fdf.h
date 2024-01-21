@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 19:10:38 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 20:29:47 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # endif
 
 # define SIZE 30
-# define LAYOUT_WIDTH 0
-# define LAYOUT_HEIGHT 0
+# define LAYOUT_WIDTH 100
+# define LAYOUT_HEIGHT 100
 # ifndef RESIZEABLE
 #  define RESIZEABLE true
 # endif
@@ -110,6 +110,10 @@ int32_t		get_t(int32_t trgb);
 int32_t		get_r(int32_t trgb);
 int32_t		get_g(int32_t trgb);
 int32_t		get_b(int32_t trgb);
+
+/*Maths function*/
+uint32_t	max(uint32_t n1, uint32_t n2);
+uint32_t	min(uint32_t n1, uint32_t n2);
 
 /*Bresenhams line lgorithm drawers*/
 void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column);

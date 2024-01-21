@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:26:20 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 19:25:14 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:19:47 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	change_z(uint32_t *z, char sign)
 	if (sign == '-')
 	{
 		if ((*z) > 0)
-			(*z)--;
+			(*z) -= 3;
 	}
 	else
 	{
 		if ((*z) < 15)
-			(*z)++;
+			(*z) += 3;
 	}
 }
 void	ft_hook_buttons(void *param)

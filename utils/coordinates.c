@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 19:13:12 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 20:54:06 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 		return (NULL); //deal with this return
 	point->x = x;
 	point->y = y;
-	point->z = z;
+	point->z = (uint32_t)max(0, min(z, 3));
 	point->iso_x = iso(x, y, z, 'x');
 	point->iso_y = iso(x, y, z, 'y');
 	point->color = 0xFFFFFF; //color
@@ -78,7 +78,6 @@ t_points	*init_points(t_coords *coords, uint32_t step_x,
 	unsigned int	i;
 
 	i = 0;
-
 	points = coords->points;
 	while ((coords->coordinate)[i])
 	{

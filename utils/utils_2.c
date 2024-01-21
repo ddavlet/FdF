@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:32:17 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 19:22:30 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:12:29 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,24 @@ int	min_max_point(t_vars *vars)
 	t_points	*point;
 
 	coord = vars->coords;
-	while (coord->next)
+	while (coord)
+	{
+		point = coord->points;
+		while (point)
+		{
+			if (point->iso_x > (vars->width - 1))
+			{
+				vars->zoom++;
+				return (1);
+			}
+			else if (point->iso_y > vars->height)
+			{
+				vars->zoom++;
+				return (1);
+			}
+			point = point->next;
+		}
 		coord = coord->next;
-	point = coord->points;
-	while (point->next)
-		point = point->next;
-	if (point->iso_x > vars->width)
-	{
-		vars->zoom++;
-		return (1);
-	}
-	else if (point->iso_y > vars->height)
-	{
-		vars->zoom++;
-		return (1);
 	}
 	return (0);
 }

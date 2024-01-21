@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 19:11:40 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:18:59 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
 	if (!(x < img->width))
 	{
 		ft_putendl_fd("Pixel is out of bounds (axes x)", 2); // close window
+		printf("iso_x: %u width: %u\n", x, img->width);
 	}
 	if (!(y < img->height))
 	{
 		ft_putendl_fd("Pixel is out of bounds (axes y)", 2); // close window
 	}
-
 	pixelstart = &img->pixels[(y * img->width + x) * BPP];
 	draw_pixel(pixelstart, color);
 }
@@ -284,8 +284,7 @@ void	create_image(void *param)
 
 	x = 0;
 	vars = param;
-	// color = create_trgb(get_r(0xFF00), get_g(0xFF00),
-			// get_b(0xFF00), get_t(0x000000FF));
+	// mlx_delete_image(vars->mlx, vars->img);
 	while (x < vars->img->width)
 	{
 		y = 0;
@@ -294,6 +293,14 @@ void	create_image(void *param)
 		x++;
 	}
 	x = 0;
+	// vars->img = mlx_new_image(vars->mlx, vars->mlx->width - LAYOUT_WIDTH,
+	// 		vars->mlx->height - LAYOUT_HEIGHT);
+	// if (!vars->img)
+	// {
+	// 	mlx_close_window(vars->mlx);
+	// 	puts(mlx_strerror(mlx_errno));
+	// 	return ; // handle this NULL
+	// }
 	init_pointcoord(&vars->coords, vars);
 	while (min_max_point(vars))
 		init_pointcoord(&vars->coords, vars);
