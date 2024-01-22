@@ -6,105 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:02:40 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:06:47 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
-
-void	move_picture(t_vars *vars)
-{
-	t_coords	*coord;
-	t_points	*point;
-	int32_t		zn;
-	int32_t		zm;
-
-	zn = zmin(vars);
-	zm = zmax(vars);
-	coord = vars->coords;
-	while (coord)
-	{
-		point = coord->points;
-		while (point)
-		{
-			if (zn < 0)
-				point->x += (uint32_t)(abs(zn) / sqrt(2));
-			if (zm > 0)
-				point->y += (uint32_t)(abs(zm) / sqrt(2));
-			point = point->next;
-		}
-		coord = coord->next;
-	}
-}
-
-t_points	*init_point(t_points **points, uint32_t x,
-	uint32_t y, int32_t z)
-{
-	t_points	*point;
-	t_points	*last;
-
-	point = (t_points *)malloc(sizeof(t_points));
-	if (!point)
-		return (NULL); //deal with this return
-	point->x = x;
-	point->y = y;
-	point->z = 1000 / (1 + pow(2.71828, (-0.01 * z))) - 500;
-	if (!*points)
-	{
-		*points = point;
-		return (point);
-	}
-	last = *points;
-	while (last->next)
-		last = last->next;
-	last->next = point;
-	return (point);
-}
-
-t_points	*init_points(t_coords *coords, uint32_t step_x,
-		uint32_t step_y, unsigned int line)
-{
-	t_points		*points;
-	unsigned int	i;
-	int32_t			z;
-
-	i = 0;
-	points = coords->points;
-	while ((coords->coordinate)[i])
-	{
-		z = ft_atoi((coords->coordinate)[i]);
-		points = init_point(&coords->points, step_x * (i + 1),
-				step_y * line, z); // change z multiplier
-		if (!points)
-		{
-			free_points(&coords->points);
-			return (NULL); // dela with this NULL
-		}
-		i++;
-		points->next = NULL;
-		points = points->next;
-	}
-	return (coords->points);
-}
-
-void	init_pointcoord(t_coords **coords, t_vars *vars)
-{
-	t_coords		*coord;
-	unsigned int	i;
-
-	i = 1;
-	coord = *coords;
-	while (coord)
-	{
-		free_points(&coord->points);
-		coord->points = init_points(coord, vars->width / vars->x,
-				vars->height / vars->y, i); // change to varialbes to use zoom
-		coord = coord->next;
-		i++;
-	}
-	move_picture(vars);
-	init_isometrics(vars);
-}
 
 t_coords	*init_coords(t_coords **coords, char **data)
 {
