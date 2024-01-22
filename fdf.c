@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 21:18:59 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:57:21 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	draw_pixel(uint8_t *pixel, uint32_t color)
 	*(pixel++) = (uint8_t)(color >> 8);
 	*(pixel++) = (uint8_t)(color & 0xFF);
 }
-
 
 void	put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
 {
@@ -80,7 +79,7 @@ void	draw_column_test(t_vars *vars, t_points *line, t_points *next_line)
 
 	d_y = (long)next_line->iso_x - (long)line->iso_x; // should never overflow because of screen limit
 	d_x = (long)next_line->iso_y - (long)line->iso_y; // should never overflow because of screen limit
-	if (d_y > 1.5 * labs(d_x))
+	if (d_y > labs(d_x))
 		return (draw_line_slope(vars, line, next_line));
 	if (d_x < 0)
 		return (draw_column_negslope(vars, line, next_line));
@@ -115,7 +114,7 @@ void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column)
 
 	d_x = (long)next_column->iso_x - (long)column->iso_x; // should never overflow because of screen limit
 	d_y = (long)next_column->iso_y - (long)column->iso_y; // should never overflow because of screen limit
-	if (d_y > 1.5 * labs(d_x))
+	if (d_y > labs(d_x))
 		return (draw_column_test(vars, column, next_column));
 	if (d_x < 0)
 		return (draw_line_negslope(vars, column, next_column));
@@ -192,55 +191,6 @@ void	draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line)
 	}
 }
 
-// void	draw_column_line(t_vars *vars, t_points *line, t_points *next_line)
-// {
-// 	// long		d_y;
-// 	long		d_x;
-// 	uint32_t	x;
-// 	uint32_t	y;
-
-// 	// d_y = (long)next_line->iso_y - (long)line->iso_y; // should never overflow because of screen limit
-// 	d_x = (long)next_line->iso_x - (long)line->iso_x; // should never overflow because of screen limit
-// 	x = line->iso_x;
-// 	y = line->iso_y;
-// 	if (d_x == 0)
-// 	{
-// 		while (y <= next_line->iso_y)
-// 			put_pixel(vars->img, x, y++, 0xFFFFFFFF);
-// 	}
-// }
-
-// void	draw_column_slope(t_vars *vars, t_points *line, t_points *next_line)
-// {
-// 	long		d_y;
-// 	long		d_x;
-// 	long		slope_error;
-// 	uint32_t	x;
-// 	uint32_t	y;
-
-// 	d_y = (long)next_line->iso_y - (long)line->iso_y; // should never overflow because of screen limit
-// 	d_x = (long)next_line->iso_x - (long)line->iso_x; // should never overflow because of screen limit
-// 	slope_error = 2 * labs(d_y) - d_x;
-// 	x = line->iso_x;
-// 	y = line->iso_y;
-// 	while (x < next_line->iso_x)
-// 	{
-// 		if (slope_error > 0)
-// 		{
-// 			if (d_y > 0)
-// 				y++;
-// 			else
-// 				y--;
-// 			slope_error += 2 * (labs(d_y) - d_x);
-// 		}
-// 		else
-// 			slope_error += 2 * labs(d_y);
-// 		if (d_x > 0)
-// 			x++;
-// 		put_pixel(vars->img, x, y, 0xFFFFFFFF);
-// 	}
-// }
-
 void	draw_column(t_vars *vars, t_coords *coords)
 {
 	uint32_t	i;
@@ -253,9 +203,6 @@ void	draw_column(t_vars *vars, t_coords *coords)
 	while (i <= vars->x)
 	{
 		draw_column_test(vars, point, next_point);
-		// draw_column_slope(vars, point, next_point);
-		// draw_column_negslope(vars, point, next_point);
-		// draw_column_line(vars, point, next_point);
 		put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF);
 		point = point->next;
 		next_point = next_point->next;
@@ -278,39 +225,30 @@ void	put_iso_column(t_vars *vars)
 void	create_image(void *param)
 {
 	t_vars		*vars;
-	// uint32_t	color;
 	uint32_t	x;
 	uint32_t	y;
+	// uint32_t	color;
 
 	x = 0;
 	vars = param;
-	// mlx_delete_image(vars->mlx, vars->img);
 	while (x < vars->img->width)
 	{
 		y = 0;
 		while (y < vars->img->height)
-			put_pixel(vars->img, x, y++, 0);
+			put_pixel(vars->img, x, y++, 0x00FF);
 		x++;
 	}
 	x = 0;
-	// vars->img = mlx_new_image(vars->mlx, vars->mlx->width - LAYOUT_WIDTH,
-	// 		vars->mlx->height - LAYOUT_HEIGHT);
-	// if (!vars->img)
-	// {
-	// 	mlx_close_window(vars->mlx);
-	// 	puts(mlx_strerror(mlx_errno));
-	// 	return ; // handle this NULL
-	// }
+	// init_pointcoord(&vars->coords, vars);
+
 	init_pointcoord(&vars->coords, vars);
-	while (min_max_point(vars))
-		init_pointcoord(&vars->coords, vars);
 	put_iso_line(vars);
 	put_iso_column(vars);
 }
 
 int	create_window(t_vars *vars)
 {
-	if (mlx_image_to_window(vars->mlx, vars->img, LAYOUT_WIDTH / 2, LAYOUT_HEIGHT / 2) == -1)
+	if (mlx_image_to_window(vars->mlx, vars->img, LAYOUT_WIDTH / 4, LAYOUT_HEIGHT / 4) == -1)
 	{
 		mlx_close_window(vars->mlx);
 		puts(mlx_strerror(mlx_errno));

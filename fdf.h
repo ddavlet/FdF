@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 20:29:47 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:04:35 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # endif
 
 # define SIZE 30
-# define LAYOUT_WIDTH 100
-# define LAYOUT_HEIGHT 100
+# define LAYOUT_WIDTH 50
+# define LAYOUT_HEIGHT 50
 # ifndef RESIZEABLE
 #  define RESIZEABLE true
 # endif
@@ -48,7 +48,7 @@ typedef struct s_point
 {
 	uint32_t		x;
 	uint32_t		y;
-	uint32_t		z;
+	int32_t			z;
 	uint32_t		iso_x;
 	uint32_t		iso_y;
 	uint32_t		color;
@@ -87,16 +87,26 @@ void		terminate_vars(t_vars *vars);
 t_coords	*init_coords(t_coords **coords, char **data);
 void		parse_coordinates(char *file_name, t_vars *vars);
 void		init_pointcoord(t_coords **coords, t_vars *vars);
+void		move_picture(t_vars *vars);
 void		free_coordinates(char **ptr);
 void		free_coords(t_coords **coords);
 
-/* Other utils*/
+/*Points functions*/
+void		init_isometrics(t_vars *vars);
+
+/*Terminate and free functions*/
+void		free_points(t_points **points);
+void		free_coordinates(char **ptr);
+void		free_coords(t_coords **coords);
+
+/*Other utils*/
 uint32_t	ft_arraystrlen(char **array);
 void		clear_exit(char **ptr, int error);
 uint32_t	limits(uint32_t num, uint32_t max);
-// void		min_max_img(t_vars *vars);
-uint32_t	iso(uint32_t x, uint32_t y, uint32_t z, char axes);
-int			min_max_point(t_vars *vars);
+int32_t		zmax(t_vars *vars);
+int32_t		zmin(t_vars *vars);
+uint32_t	iso(uint32_t x, uint32_t y, int32_t z, char axes);
+uint32_t	min_max_point(t_vars *vars, char axes);
 
 /*Hooks*/
 void		ft_hook_scroll(double xdelta, double ydelta, void *param);
@@ -112,12 +122,12 @@ int32_t		get_g(int32_t trgb);
 int32_t		get_b(int32_t trgb);
 
 /*Maths function*/
-uint32_t	max(uint32_t n1, uint32_t n2);
-uint32_t	min(uint32_t n1, uint32_t n2);
+int32_t		max(int32_t n1, int32_t n2);
+int32_t		min(int32_t n1, int32_t n2);
 
 /*Bresenhams line lgorithm drawers*/
-void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column);
+void		draw_line_slope(t_vars *vars, t_points *column, t_points *next_column);
 
-void	draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line);
+void		draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line);
 
 #endif

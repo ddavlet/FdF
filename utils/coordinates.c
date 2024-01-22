@@ -6,27 +6,39 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 20:54:06 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:02:40 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	free_points(t_points **points)
+void	move_picture(t_vars *vars)
 {
-	t_points	*tmp;
+	t_coords	*coord;
+	t_points	*point;
+	int32_t		zn;
+	int32_t		zm;
 
-	tmp = *points;
-	while (tmp)
+	zn = zmin(vars);
+	zm = zmax(vars);
+	coord = vars->coords;
+	while (coord)
 	{
-		free(tmp);
-		tmp = tmp->next;
+		point = coord->points;
+		while (point)
+		{
+			if (zn < 0)
+				point->x += (uint32_t)(abs(zn) / sqrt(2));
+			if (zm > 0)
+				point->y += (uint32_t)(abs(zm) / sqrt(2));
+			point = point->next;
+		}
+		coord = coord->next;
 	}
-	*points = NULL;
 }
 
 t_points	*init_point(t_points **points, uint32_t x,
-	uint32_t y, uint32_t z)
+	uint32_t y, int32_t z)
 {
 	t_points	*point;
 	t_points	*last;
@@ -36,10 +48,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 		return (NULL); //deal with this return
 	point->x = x;
 	point->y = y;
-	point->z = (uint32_t)max(0, min(z, 3));
-	point->iso_x = iso(x, y, z, 'x');
-	point->iso_y = iso(x, y, z, 'y');
-	point->color = 0xFFFFFF; //color
+	point->z = 1000 / (1 + pow(2.71828, (-0.01 * z))) - 500;
 	if (!*points)
 	{
 		*points = point;
@@ -52,37 +61,20 @@ t_points	*init_point(t_points **points, uint32_t x,
 	return (point);
 }
 
-int	check_boundaries(t_vars *vars) //what it does?
-{
-	t_coords	*coords;
-	t_points	*tmp;
-
-	coords = vars->coords;
-	while (coords->next)
-		coords = coords->next;
-	tmp = coords->points;
-	while (tmp)
-	{
-		if (tmp->iso_y >= vars->img->height
-			|| tmp->iso_x >= vars->img->width)
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
 t_points	*init_points(t_coords *coords, uint32_t step_x,
 		uint32_t step_y, unsigned int line)
 {
 	t_points		*points;
 	unsigned int	i;
+	int32_t			z;
 
 	i = 0;
 	points = coords->points;
 	while ((coords->coordinate)[i])
 	{
-		points = init_point(&coords->points, step_x * (i + 1), step_y * line,
-				(uint32_t)ft_atoi((coords->coordinate)[i]) * 6); // change z multiplier
+		z = ft_atoi((coords->coordinate)[i]);
+		points = init_point(&coords->points, step_x * (i + 1),
+				step_y * line, z); // change z multiplier
 		if (!points)
 		{
 			free_points(&coords->points);
@@ -105,11 +97,13 @@ void	init_pointcoord(t_coords **coords, t_vars *vars)
 	while (coord)
 	{
 		free_points(&coord->points);
-		coord->points = init_points(coord, (vars->width - vars->zoom) / vars->x, // change to varialbes to use zoom
-				(vars->height - vars->zoom) / vars->y , i); // change to varialbes to use zoom
+		coord->points = init_points(coord, vars->width / vars->x,
+				vars->height / vars->y, i); // change to varialbes to use zoom
 		coord = coord->next;
 		i++;
 	}
+	move_picture(vars);
+	init_isometrics(vars);
 }
 
 t_coords	*init_coords(t_coords **coords, char **data)
@@ -166,30 +160,4 @@ void	parse_coordinates(char *file_name, t_vars *vars)
 		(vars->y)++;
 	}
 	close(fd);
-}
-
-void	free_coordinates(char **ptr)
-{
-	char	**tmp;
-
-	tmp = ptr;
-	while (*ptr)
-	{
-		free(*ptr++);
-	}
-	free (tmp);
-}
-
-void	free_coords(t_coords **coords)
-{
-	t_coords	*coord;
-
-	coord = *coords;
-	while (coord)
-	{
-		free_coordinates(coord->coordinate);
-		free_points(&coord->points);
-		free(coord);
-		coord = coord->next;
-	}
 }

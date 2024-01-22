@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:26:20 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/21 21:19:47 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:08:51 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,27 @@ void	ft_hook_scroll(double xdelta, double ydelta, void *param)
 	vars = param;
 	printf("x: %f\ny: %f", xdelta, ydelta);
 	if (ydelta < 0)
-		if(vars->zoom < (vars->height - 100)
+		if (vars->zoom < (vars->height - 100)
 			&& vars->zoom < (vars->width - 100))
-			vars->zoom++;
+			vars->zoom += 2;
 	if (ydelta > 0)
-			vars->zoom--;
+		vars->zoom -= 2;
 }
 
-void	change_z(uint32_t *z, char sign)
+void	change_z(uint32_t *z, char sign) // ??
 {
 	if (sign == '-')
 	{
 		if ((*z) > 0)
-			(*z) -= 3;
+			(*z) -= 1;
 	}
 	else
 	{
 		if ((*z) < 15)
-			(*z) += 3;
+			(*z) += 1;
 	}
 }
+
 void	ft_hook_buttons(void *param)
 {
 	t_vars	*vars;
