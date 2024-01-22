@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:08:55 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:23:35 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 		return (NULL); //deal with this return
 	point->x = x;
 	point->y = y;
-	point->z = 1000 / (1 + pow(2.71828, (-0.01 * z))) - 500;
+	point->z = 1000 / (1 + pow(2.71828, (-0.5 * z))) - 500;
 	if (!*points)
 	{
 		*points = point;
@@ -72,8 +72,8 @@ void	init_pointcoord(t_coords **coords, t_vars *vars)
 	while (coord)
 	{
 		free_points(&coord->points);
-		coord->points = init_points(coord, vars->width / vars->x,
-				vars->height / vars->y, i); // change to varialbes to use zoom
+		coord->points = init_points(coord, (vars->width - vars->zoom) / vars->x,
+				(vars->height - vars->zoom) / vars->y, i); // change to varialbes to use zoom
 		coord = coord->next;
 		i++;
 	}
@@ -87,9 +87,11 @@ void	move_picture(t_vars *vars)
 	t_points	*point;
 	int32_t		zn;
 	int32_t		zm;
+	uint32_t	xm;
 
 	zn = zmin(vars);
 	zm = zmax(vars);
+	xm = mmax(vars);
 	coord = vars->coords;
 	while (coord)
 	{
@@ -99,7 +101,7 @@ void	move_picture(t_vars *vars)
 			if (zn < 0)
 				point->x += (uint32_t)(abs(zn) / sqrt(2));
 			if (zm > 0)
-				point->y += (uint32_t)(abs(zm) / sqrt(2));
+				point->y += ((uint32_t)(abs(zm) / sqrt(2))) + (xm / sqrt(15)); //change to angle and z height
 			point = point->next;
 		}
 		coord = coord->next;

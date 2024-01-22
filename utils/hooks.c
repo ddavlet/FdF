@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:26:20 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 12:08:51 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:25:02 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ void	ft_hook_scroll(double xdelta, double ydelta, void *param)
 	vars = param;
 	printf("x: %f\ny: %f", xdelta, ydelta);
 	if (ydelta < 0)
-		if (vars->zoom < (vars->height - 100)
-			&& vars->zoom < (vars->width - 100))
+		if (vars->zoom < (vars->height - 300)
+			|| vars->zoom < (vars->width - 300))
 			vars->zoom += 2;
 	if (ydelta > 0)
-		vars->zoom -= 2;
+		if (min_max_point(vars, 'x') < vars->img->width
+			|| min_max_point(vars, 'y') < vars->img->height
+			|| vars->zoom > 1)
+			vars->zoom -= 2;
 }
 
 void	change_z(uint32_t *z, char sign) // ??

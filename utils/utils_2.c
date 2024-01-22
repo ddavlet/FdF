@@ -6,19 +6,24 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:32:17 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:02:09 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:01:46 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+// double	angle(float angle)
+// {
+
+// }
 
 uint32_t	iso(uint32_t x, uint32_t y, int32_t z, char axes)
 {
 	uint32_t	x_iso;
 	uint32_t	y_iso;
 
-	x_iso = (uint32_t)((float)x + (float)z / sqrt(2) + y / sqrt(2)); //change 2-3 to some angle
-	y_iso = (uint32_t)((float)y - (float)z / sqrt(2));
+	x_iso = (uint32_t)((float)x + (float)z / sqrt(2) + y * 2);
+	y_iso = (uint32_t)((float)y - (float)z / sqrt(2) - x / sqrt(10));
 	if (axes == 'x')
 		return (x_iso);
 	else
@@ -92,6 +97,28 @@ int32_t	zmin(t_vars *vars)
 		{
 			if (points->z < i)
 				i = points->z;
+			points = points->next;
+		}
+		coord = coord->next;
+	}
+	return (i);
+}
+
+uint32_t	mmax(t_vars *vars)
+{
+	t_coords	*coord;
+	t_points	*points;
+	uint32_t	i;
+
+	i = 0;
+	coord = vars->coords;
+	while (coord)
+	{
+		points = coord->points;
+		while (points)
+		{
+			if (points->x > i)
+				i = points->x;
 			points = points->next;
 		}
 		coord = coord->next;

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 13:27:56 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:04:13 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ uint32_t	limits(uint32_t num, uint32_t max)
 {
 	if (num > max)
 		return (max);
-	num = SIZE * log2(num) * log2(num);
+	num = log2(num) * log2(num) * sqrt(max);
 	if (num >= max)
 		return (max - 1);
 	// if (num == 0)

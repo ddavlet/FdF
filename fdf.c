@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:17:43 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:23:56 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	create_image(void *param)
 		x++;
 	}
 	x = 0;
-	// init_pointcoord(&vars->coords, vars);
-
 	init_pointcoord(&vars->coords, vars);
 	put_iso_line(vars);
 	put_iso_column(vars);

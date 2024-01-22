@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 15:59:09 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:25:33 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ mlx_image_t	*init_image(t_vars *vars)
 	return (vars->img);
 }
 
+void	terminate_vars(t_vars *vars)
+{
+	free_coords(&vars->coords);
+	free(vars);
+}
+
 t_vars	*init_vars(char *file_name)
 {
 	t_vars		*vars;
@@ -75,15 +81,7 @@ t_vars	*init_vars(char *file_name)
 	vars->height = limits(vars->y, 1080);
 	vars->zoom = 0;
 	init_pointcoord(&vars->coords, vars);
-	// move_picture(vars);
-	// init_isometrics(vars);
 	init_window(vars);
 	init_image(vars);
 	return (vars);
-}
-
-void	terminate_vars(t_vars *vars)
-{
-	free_coords(&vars->coords);
-	free(vars);
 }
