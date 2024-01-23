@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:16:40 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:17:41 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:24:21 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
 	if (!(y < img->height))
 	{
 		ft_putendl_fd("Pixel is out of bounds (axes y)", 2); // close window
+		printf("iso_y: %u height: %u\n", y, img->height);
 	}
 	pixelstart = &img->pixels[(y * img->width + x) * BPP];
 	draw_pixel(pixelstart, color);

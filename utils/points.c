@@ -6,11 +6,35 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 18:23:35 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:47:16 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+int32_t	init_z_points(t_vars *vars)
+{
+	t_coords	*coord;
+	t_points	*points;
+	int32_t		i;
+	int32_t		x;
+
+	i = zmax(vars) - zmin(vars);
+	x = (int32_t)mmax(vars) * 2;
+	coord = vars->coords;
+	while (coord)
+	{
+		points = coord->points;
+		while (points)
+		{
+			if (points->z != 0)
+				points->z = (int32_t)(float)points->z / (float)i * (float)x;
+			points = points->next;
+		}
+		coord = coord->next;
+	}
+	return (i);
+}
 
 t_points	*init_point(t_points **points, uint32_t x,
 	uint32_t y, int32_t z)
@@ -23,7 +47,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 		return (NULL); //deal with this return
 	point->x = x;
 	point->y = y;
-	point->z = 1000 / (1 + pow(2.71828, (-0.5 * z))) - 500;
+	point->z = z;
 	if (!*points)
 	{
 		*points = point;
@@ -77,6 +101,7 @@ void	init_pointcoord(t_coords **coords, t_vars *vars)
 		coord = coord->next;
 		i++;
 	}
+	init_z_points(vars);
 	move_picture(vars);
 	init_isometrics(vars);
 }
@@ -98,12 +123,25 @@ void	move_picture(t_vars *vars)
 		point = coord->points;
 		while (point)
 		{
-			if (zn < 0)
-				point->x += (uint32_t)(abs(zn) / sqrt(2));
+			// if (zn < 0)
+				// point->x += (uint32_t)(abs(zn) / sqrt(2));
 			if (zm > 0)
-				point->y += ((uint32_t)(abs(zm) / sqrt(2))) + (xm / sqrt(15)); //change to angle and z height
+				point->y += (uint32_t)(abs(zm) / sqrt(2) + xm / sqrt(6));
 			point = point->next;
 		}
 		coord = coord->next;
 	}
+}
+
+uint32_t	iso(uint32_t x, uint32_t y, int32_t z, char axes)
+{
+	uint32_t	x_iso;
+	uint32_t	y_iso;
+
+	x_iso = (uint32_t)((float)x + 1.9 * (float)y);
+	y_iso = (uint32_t)((float)y - (float)z / sqrt(2) - x / sqrt(6));
+	if (axes == 'x')
+		return (x_iso);
+	else
+		return (y_iso);
 }

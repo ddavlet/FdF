@@ -6,29 +6,29 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:26:20 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 18:25:02 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:56:27 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 /*100 is never more than dimensions. Overflow should never be a case*/
-void	ft_hook_scroll(double xdelta, double ydelta, void *param)
-{
-	t_vars	*vars;
+// void	ft_hook_scroll(double xdelta, double ydelta, void *param)
+// {
+// 	t_vars	*vars;
 
-	vars = param;
-	printf("x: %f\ny: %f", xdelta, ydelta);
-	if (ydelta < 0)
-		if (vars->zoom < (vars->height - 300)
-			|| vars->zoom < (vars->width - 300))
-			vars->zoom += 2;
-	if (ydelta > 0)
-		if (min_max_point(vars, 'x') < vars->img->width
-			|| min_max_point(vars, 'y') < vars->img->height
-			|| vars->zoom > 1)
-			vars->zoom -= 2;
-}
+// 	vars = param;
+// 	printf("x: %f\ny: %f", xdelta, ydelta);
+// 	if (ydelta < 0)
+// 		if (vars->zoom < (vars->height - 300)
+// 			|| vars->zoom < (vars->width - 300))
+// 			vars->zoom += 2;
+// 	if (ydelta > 0)
+// 		if (min_max_point(vars, 'x') < vars->img->width
+// 			|| min_max_point(vars, 'y') < vars->img->height
+// 			|| vars->zoom > 2)
+// 			vars->zoom -= 2;
+// }
 
 void	change_z(uint32_t *z, char sign) // ??
 {

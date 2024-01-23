@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:25:33 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:38:08 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ t_vars	*init_vars(char *file_name)
 	// vars->z = 6;
 	vars->coords = NULL;
 	parse_coordinates(file_name, vars); // check if width or height is 0
-	vars->width = limits(vars->x, 1920);
-	vars->height = limits(vars->y, 1080);
+	vars->width = limits(vars->x, vars->x, 300);
+	vars->height = limits(vars->y, vars->x, 300) / 1.8; //change max according to number of entries
 	vars->zoom = 0;
 	init_pointcoord(&vars->coords, vars);
 	init_window(vars);

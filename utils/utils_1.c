@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 18:04:13 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:21:00 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,9 @@ void	clear_exit(char **ptr, int error) // what is that for?
 	}
 }
 
-uint32_t	limits(uint32_t num, uint32_t max)
+uint32_t	limits(uint32_t num, uint32_t num2, uint32_t max)
 {
-	if (num > max)
-		return (max);
-	num = log2(num) * log2(num) * sqrt(max);
-	if (num >= max)
-		return (max - 1);
-	// if (num == 0)
-	// 	return (0);
+	num = (uint32_t)((float)num / (float)num2) * (float)max;
 	if (num < 300) // change to WIDTH && HEIGHT
 		return (300);
 	return (num);

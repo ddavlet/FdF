@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:46:40 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:00:28 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,11 @@ void		free_coords(t_coords **coords);
 /*Other utils*/
 uint32_t	ft_arraystrlen(char **array);
 void		clear_exit(char **ptr, int error);
-uint32_t	limits(uint32_t num, uint32_t max);
+uint32_t	limits(uint32_t num, uint32_t num2, uint32_t max);
 int32_t		zmax(t_vars *vars);
 int32_t		zmin(t_vars *vars);
 uint32_t	mmax(t_vars *vars);
+uint32_t	ymin(t_vars *vars);
 uint32_t	iso(uint32_t x, uint32_t y, int32_t z, char axes);
 uint32_t	min_max_point(t_vars *vars, char axes);
 

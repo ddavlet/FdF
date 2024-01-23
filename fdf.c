@@ -6,11 +6,26 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:23:56 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:30:48 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	img_limit(t_vars *vars)
+{
+	if (min_max_point(vars, 'x') > vars->img->width)
+	{
+		vars->zoom++;
+		return (1);
+	}
+	if (min_max_point(vars, 'y') > vars->img->height)
+	{
+		vars->zoom++;
+		return (1);
+	}
+	return (0);
+}
 
 void	create_image(void *param)
 {
@@ -29,7 +44,9 @@ void	create_image(void *param)
 		x++;
 	}
 	x = 0;
-	init_pointcoord(&vars->coords, vars);
+	// init_pointcoord(&vars->coords, vars);
+	// if (img_limit(vars))
+	// 	init_pointcoord(&vars->coords, vars);
 	put_iso_line(vars);
 	put_iso_column(vars);
 }
@@ -43,7 +60,7 @@ int	create_window(t_vars *vars)
 		return (EXIT_FAILURE);
 	}
 	mlx_loop_hook(vars->mlx, ft_hook_buttons, vars);
-	mlx_scroll_hook(vars->mlx, ft_hook_scroll, vars); // do I need this?
+	// mlx_scroll_hook(vars->mlx, ft_hook_scroll, vars); // do I need this?
 	// mlx_mouse_hook(vars->mlx, ft_hook_mouse, vars); // do I need this?
 	mlx_loop_hook(vars->mlx, create_image, vars);
 	mlx_loop(vars->mlx);

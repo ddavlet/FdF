@@ -6,28 +6,32 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:32:17 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 18:01:46 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:10:51 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-// double	angle(float angle)
-// {
-
-// }
-
-uint32_t	iso(uint32_t x, uint32_t y, int32_t z, char axes)
+uint32_t	ymin(t_vars *vars)
 {
-	uint32_t	x_iso;
-	uint32_t	y_iso;
+	t_coords	*coord;
+	t_points	*points;
+	uint32_t	i;
 
-	x_iso = (uint32_t)((float)x + (float)z / sqrt(2) + y * 2);
-	y_iso = (uint32_t)((float)y - (float)z / sqrt(2) - x / sqrt(10));
-	if (axes == 'x')
-		return (x_iso);
-	else
-		return (y_iso);
+	i = UINT32_MAX;
+	coord = vars->coords;
+	while (coord)
+	{
+		points = coord->points;
+		while (points)
+		{
+			if (points->y < i)
+				i = points->y;
+			points = points->next;
+		}
+		coord = coord->next;
+	}
+	return (i);
 }
 
 /*Protection of iso point overflow is in zoom hook*/
