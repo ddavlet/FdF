@@ -2,6 +2,7 @@
 glfw
 MLX42
 *.o
+*/*.o
 fdf
 libft.a
 libmlx42.a

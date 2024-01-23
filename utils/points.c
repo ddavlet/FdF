@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 17:47:16 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:28:55 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int32_t	init_z_points(t_vars *vars)
 	int32_t		i;
 	int32_t		x;
 
-	i = zmax(vars) - zmin(vars);
-	x = (int32_t)mmax(vars) * 2;
+	// i = zmax(vars) - zmin(vars);
+	i = vars->x;
+	x = (int32_t)mmax(vars);
 	coord = vars->coords;
 	while (coord)
 	{
@@ -102,6 +103,7 @@ void	init_pointcoord(t_coords **coords, t_vars *vars)
 		i++;
 	}
 	init_z_points(vars);
+	// init_colors_points(vars); //ini
 	move_picture(vars);
 	init_isometrics(vars);
 }
@@ -110,11 +112,11 @@ void	move_picture(t_vars *vars)
 {
 	t_coords	*coord;
 	t_points	*point;
-	int32_t		zn;
+	// int32_t		zn;
 	int32_t		zm;
 	uint32_t	xm;
 
-	zn = zmin(vars);
+	// zn = zmin(vars);
 	zm = zmax(vars);
 	xm = mmax(vars);
 	coord = vars->coords;
@@ -125,7 +127,7 @@ void	move_picture(t_vars *vars)
 		{
 			// if (zn < 0)
 				// point->x += (uint32_t)(abs(zn) / sqrt(2));
-			if (zm > 0)
+			if (zm != 0 || xm != 0)
 				point->y += (uint32_t)(abs(zm) / sqrt(2) + xm / sqrt(6));
 			point = point->next;
 		}
@@ -133,13 +135,19 @@ void	move_picture(t_vars *vars)
 	}
 }
 
-uint32_t	iso(uint32_t x, uint32_t y, int32_t z, char axes)
+uint32_t	iso(t_vars *vars, t_points *point, char axes)
 {
 	uint32_t	x_iso;
 	uint32_t	y_iso;
+	int32_t		zm;
+	uint32_t	xm;
 
-	x_iso = (uint32_t)((float)x + 1.9 * (float)y);
-	y_iso = (uint32_t)((float)y - (float)z / sqrt(2) - x / sqrt(6));
+	zm = zmax(vars);
+	xm = mmax(vars);
+	x_iso = (uint32_t)((float)point->x + 1.9 * (float)point->y)
+		- (uint32_t)(abs(zm) / sqrt(2) + xm / sqrt(6));
+	y_iso = (uint32_t)((float)point->y - (float)point->z
+			/ sqrt(2) - point->x / sqrt(6));
 	if (axes == 'x')
 		return (x_iso);
 	else

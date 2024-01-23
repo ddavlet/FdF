@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 14:30:48 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:25:12 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	img_limit(t_vars *vars)
 {
-	if (min_max_point(vars, 'x') > vars->img->width)
+	if (min_max_point(vars, 'x') > 1900)
 	{
 		vars->zoom++;
 		return (1);
 	}
-	if (min_max_point(vars, 'y') > vars->img->height)
+	if (min_max_point(vars, 'y') > 1000)
 	{
+		vars->x++;
 		vars->zoom++;
 		return (1);
 	}

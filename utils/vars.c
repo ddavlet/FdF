@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 17:38:08 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:09:48 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	init_isometrics(t_vars *vars)
 		point = coord->points;
 		while (point)
 		{
-			point->iso_x = iso(point->x, point->y, point->z, 'x');
-			point->iso_y = iso(point->x, point->y, point->z, 'y');
+			point->iso_x = iso(vars, point, 'x');
+			point->iso_y = iso(vars, point, 'y');
 			point = point->next;
 		}
 		coord = coord->next;

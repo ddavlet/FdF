@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 14:00:28 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:04:09 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int32_t		zmax(t_vars *vars);
 int32_t		zmin(t_vars *vars);
 uint32_t	mmax(t_vars *vars);
 uint32_t	ymin(t_vars *vars);
-uint32_t	iso(uint32_t x, uint32_t y, int32_t z, char axes);
+uint32_t	iso(t_vars *vars, t_points *point, char axes);
 uint32_t	min_max_point(t_vars *vars, char axes);
 
 /*Hooks*/
