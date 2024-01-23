@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 18:04:09 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 22:06:52 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ uint32_t	mmax(t_vars *vars);
 uint32_t	ymin(t_vars *vars);
 uint32_t	iso(t_vars *vars, t_points *point, char axes);
 uint32_t	min_max_point(t_vars *vars, char axes);
+void		init_colors_points(t_vars *vars);
 
 /*Hooks*/
 void		ft_hook_scroll(double xdelta, double ydelta, void *param);

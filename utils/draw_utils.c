@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:15 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 15:05:52 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 22:10:39 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column)
 		else
 			slope_error += 2 * labs(d_y);
 		x++;
-		put_pixel(vars->img, x, y, 0xFFFFFFFF);
+		put_pixel(vars->img, x, y, column->color);
 	}
 }
 
@@ -75,7 +75,7 @@ void	draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line)
 		else
 			slope_error += 2 * labs(d_x);
 		y++;
-		put_pixel(vars->img, x, y, 0xFFFFFFFF);
+		put_pixel(vars->img, x, y, next_line->color);
 	}
 }
 
@@ -109,7 +109,7 @@ void	draw_column_slope(t_vars *vars, t_points *line, t_points *next_line)
 		else
 			slope_error += 2 * labs(d_x);
 		y++;
-		put_pixel(vars->img, x, y, 0xFFFFFFFF);
+		put_pixel(vars->img, x, y, line->color);
 	}
 }
 
@@ -139,6 +139,6 @@ void	draw_line_negslope(t_vars *vars, t_points *column, t_points *next_column)
 		else
 			slope_error += 2 * labs(d_y);
 		x++;
-		put_pixel(vars->img, x, y, 0xFFFFFFFF);
+		put_pixel(vars->img, x, y, next_column->color);
 	}
 }

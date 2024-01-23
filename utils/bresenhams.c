@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:16:40 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 14:24:21 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 21:31:13 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	draw_column(t_vars *vars, t_coords *coords)
 	while (i <= vars->x)
 	{
 		draw_column_slope(vars, point, next_point);
-		put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF);
+		// put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF);
 		point = point->next;
 		next_point = next_point->next;
 		i++;
@@ -84,7 +84,7 @@ void	put_iso_line(t_vars *vars)
 		{
 			draw_line_slope(vars, point, point->next);
 			// draw_line_negslope(vars, point, point->next);
-			put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF); // delete
+			// put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF); // delete
 			point = point->next;
 		}
 		coord = coord->next;

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 18:25:12 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 21:29:30 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	create_image(void *param)
 	{
 		y = 0;
 		while (y < vars->img->height)
-			put_pixel(vars->img, x, y++, 0x00FF);
+			put_pixel(vars->img, x, y++, 0x00000000);
 		x++;
 	}
 	x = 0;

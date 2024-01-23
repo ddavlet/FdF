@@ -6,13 +6,13 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 18:28:55 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/23 22:23:20 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int32_t	init_z_points(t_vars *vars)
+void	init_z_points(t_vars *vars)
 {
 	t_coords	*coord;
 	t_points	*points;
@@ -34,7 +34,6 @@ int32_t	init_z_points(t_vars *vars)
 		}
 		coord = coord->next;
 	}
-	return (i);
 }
 
 t_points	*init_point(t_points **points, uint32_t x,
@@ -103,9 +102,66 @@ void	init_pointcoord(t_coords **coords, t_vars *vars)
 		i++;
 	}
 	init_z_points(vars);
-	// init_colors_points(vars); //ini
+	init_colors_points(vars); //initialize colors
 	move_picture(vars);
 	init_isometrics(vars);
+}
+
+uint32_t ft_atoi_hex(const char *str)
+{
+	uint32_t	i;
+	uint32_t	result;
+
+	str += 3;
+	i = 0;
+	result = 0;
+	// ft_printf("%s\n", str);
+	while (*str && *str != '\n')
+	{
+		if (*str >= '0' && *str <= '9')
+			i = *str - '0';
+		else if (*str >= 'a' && *str <= 'f')
+			i = *str - 'a' + 10;
+		else if (*str >= 'A' && *str <= 'F')
+			i = *str - 'A' + 10;
+		else
+		{
+			perror("Error parsing color");
+			return (UINT32_MAX);
+		}
+		result = result * 16 + i;
+		str++;
+	}
+	// printf ("%i\n", result);
+	if (result > 0)
+		return (result);
+	else
+		return (UINT32_MAX);
+}
+
+void	init_colors_points(t_vars *vars)
+{
+	t_coords	*coord;
+	t_points	*points;
+	uint32_t	i;
+
+	coord = vars->coords;
+	while (coord)
+	{
+		points = coord->points;
+		i = 0;
+		while (points)
+		{
+			if (ft_strchr((coord->coordinate)[i], ','))
+				points->color = ft_atoi_hex(ft_strchr((coord->coordinate)[i], ','));
+			if (points->color == 0)
+				points->color = UINT32_MAX;
+			i++;
+			points = points->next;
+		}
+		coord = coord->next;
+	}
+	// return (i);
 }
 
 void	move_picture(t_vars *vars)
@@ -145,7 +201,7 @@ uint32_t	iso(t_vars *vars, t_points *point, char axes)
 	zm = zmax(vars);
 	xm = mmax(vars);
 	x_iso = (uint32_t)((float)point->x + 1.9 * (float)point->y)
-		- (uint32_t)(abs(zm) / sqrt(2) + xm / sqrt(6));
+		- 1.9 * (uint32_t)(abs(zm) / sqrt(2) + xm / sqrt(6));
 	y_iso = (uint32_t)((float)point->y - (float)point->z
 			/ sqrt(2) - point->x / sqrt(6));
 	if (axes == 'x')
