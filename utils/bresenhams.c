@@ -6,37 +6,70 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:16:40 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 21:31:13 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:31:07 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	draw_pixel(uint8_t *pixel, uint32_t color)
+void	draw_pixel(uint8_t *pixel, t_color color)
 {
-	*(pixel++) = (uint8_t)(color >> 24);
-	*(pixel++) = (uint8_t)(color >> 16);
-	*(pixel++) = (uint8_t)(color >> 8);
-	*(pixel++) = (uint8_t)(color & 0xFF);
+	*(pixel++) = color.alpha;
+	*(pixel++) = color.green;
+	*(pixel++) = color.blue;
+	*(pixel++) = (uint8_t)(0xFF);
 }
 
-void	put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
+// void	put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
+// {
+// 	uint8_t	*pixelstart;
+
+// 	if (!img)
+// 		ft_putendl_fd("Image does not exist", 2);
+// 	if (!(x < img->width))
+// 	{
+// 		ft_putendl_fd("Pixel is out of bounds (axes x)", 2); // close window
+// 		printf("iso_x: %u width: %u\n", x, img->width);
+// 	}
+// 	if (!(y < img->height))
+// 	{
+// 		ft_putendl_fd("Pixel is out of bounds (axes y)", 2); // close window
+// 		printf("iso_y: %u height: %u\n", y, img->height);
+// 	}
+// 	pixelstart = &img->pixels[(y * img->width + x) * BPP];
+// 	draw_pixel(pixelstart, color);
+// }
+
+t_color	interpol_color(t_pixel pixel, float s)
 {
-	uint8_t	*pixelstart;
+	t_color	color;
+
+	color.red = (1 - s) * (pixel.color_to >> 16) + s * (pixel.color_fr >> 16);
+	color.green = (1 - s) * (pixel.color_to >> 8) + s * (pixel.color_fr >> 8);
+	color.blue = (1 - s) * (pixel.color_to & 0xFF) + s * (pixel.color_fr & 0xFF);
+	color.alpha = 255;
+	return (color);
+}
+
+void	put_pixel(mlx_image_t *img, t_pixel pixel, uint32_t y)
+{
+	t_color		color;
+	uint8_t		*pixelstart;
 
 	if (!img)
 		ft_putendl_fd("Image does not exist", 2);
-	if (!(x < img->width))
+	if (!(pixel.x < img->width))
 	{
 		ft_putendl_fd("Pixel is out of bounds (axes x)", 2); // close window
-		printf("iso_x: %u width: %u\n", x, img->width);
+		printf("iso_x: %u width: %u\n", pixel.x, img->width);
 	}
-	if (!(y < img->height))
+	if (!(pixel.y < img->height))
 	{
 		ft_putendl_fd("Pixel is out of bounds (axes y)", 2); // close window
-		printf("iso_y: %u height: %u\n", y, img->height);
+		printf("iso_y: %u height: %u\n", pixel.y, img->height);
 	}
-	pixelstart = &img->pixels[(y * img->width + x) * BPP];
+	pixelstart = &img->pixels[(pixel.y * img->width + pixel.x) * BPP];
+	color = interpol_color(pixel, (float)(fabsf((float)y -(float)pixel.y)) / fabsf((float)pixel.d_y));
 	draw_pixel(pixelstart, color);
 }
 
@@ -49,10 +82,9 @@ void	draw_column(t_vars *vars, t_coords *coords)
 	i = 1;
 	point = coords->points;
 	next_point = coords->next->points;
-	while (i <= vars->x)
+	while (i <= vars->x && point)
 	{
 		draw_column_slope(vars, point, next_point);
-		// put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF);
 		point = point->next;
 		next_point = next_point->next;
 		i++;
@@ -83,8 +115,6 @@ void	put_iso_line(t_vars *vars)
 		while (point->next)
 		{
 			draw_line_slope(vars, point, point->next);
-			// draw_line_negslope(vars, point, point->next);
-			// put_pixel(vars->img, point->iso_x, point->iso_y, 0xFF0000FF); // delete
 			point = point->next;
 		}
 		coord = coord->next;

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:15 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 22:10:39 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:39:30 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column)
 	uint32_t	x;
 	uint32_t	y;
 
-	d_x = (long)next_column->iso_x - (long)column->iso_x; // should never overflow because of screen limit
-	d_y = (long)next_column->iso_y - (long)column->iso_y; // should never overflow because of screen limit
+	d_x = (long)next_column->iso_x - (long)column->iso_x;
+	d_y = (long)next_column->iso_y - (long)column->iso_y;
 	if (labs(d_y) > labs(d_x))
 		return (draw_column_slope(vars, column, next_column));
 	if (d_x < 0)
@@ -30,7 +30,7 @@ void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column)
 	x = column->iso_x;
 	y = column->iso_y;
 	slope_error = 2 * labs(d_y) - d_x;
-	while (x < next_column->iso_x) //change this for negative/positive only
+	while (x < next_column->iso_x)
 	{
 		if (slope_error > 0)
 		{
@@ -55,10 +55,8 @@ void	draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line)
 	uint32_t	x;
 	uint32_t	y;
 
-	d_y = (long)line->iso_y - (long)next_line->iso_y; // should never overflow because of screen limit
-	d_x = (long)line->iso_x - (long)next_line->iso_x; // should never overflow because of screen limit
-	// if (d_y > 1.5 * labs(d_x))
-	// 	return (draw_line_negslope(vars, line, next_line));
+	d_y = (long)line->iso_y - (long)next_line->iso_y;
+	d_x = (long)line->iso_x - (long)next_line->iso_x;
 	slope_error = 2 * labs(d_x) - d_y;
 	x = next_line->iso_x;
 	y = next_line->iso_y;
@@ -87,8 +85,8 @@ void	draw_column_slope(t_vars *vars, t_points *line, t_points *next_line)
 	uint32_t	x;
 	uint32_t	y;
 
-	d_x = (long)next_line->iso_x - (long)line->iso_x; // should never overflow because of screen limit
-	d_y = (long)next_line->iso_y - (long)line->iso_y; // should never overflow because of screen limit
+	d_x = (long)next_line->iso_x - (long)line->iso_x;
+	d_y = (long)next_line->iso_y - (long)line->iso_y;
 	if (labs(d_x) > labs(d_y))
 		return (draw_line_slope(vars, line, next_line));
 	if (d_y < 0)

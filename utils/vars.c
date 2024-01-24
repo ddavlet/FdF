@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 18:09:48 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:14:37 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,6 @@ mlx_image_t	*init_image(t_vars *vars)
 	return (vars->img);
 }
 
-void	terminate_vars(t_vars *vars)
-{
-	free_coords(&vars->coords);
-	free(vars);
-}
-
 t_vars	*init_vars(char *file_name)
 {
 	t_vars		*vars;
@@ -70,18 +64,20 @@ t_vars	*init_vars(char *file_name)
 	if (!vars)
 	{
 		perror("Failed to allocate memmory");
-		return (NULL);// catch it!
+		return (NULL);
 	}
 	vars->x = 0;
 	vars->y = 0;
-	// vars->z = 6;
 	vars->coords = NULL;
-	parse_coordinates(file_name, vars); // check if width or height is 0
-	vars->width = limits(vars->x, vars->x, 300);
-	vars->height = limits(vars->y, vars->x, 300) / 1.8; //change max according to number of entries
-	vars->zoom = 0;
-	init_pointcoord(&vars->coords, vars);
-	init_window(vars);
-	init_image(vars);
+	if (parse_coordinates(file_name, vars)) // check if width or height is 0 || ther is 1 point 1 line 1 column
+		return (terminate_vars(&vars));
+	vars->width = limits(vars->x, vars->x, 500);
+	vars->height = limits(vars->y, vars->x, 500) / 1.8; //change max according to number of entries
+	if (!init_pointcoord(&vars->coords, vars))
+		return (terminate_vars(&vars));
+	if (!init_window(vars))
+		return (terminate_vars(&vars));
+	if (!init_image(vars))
+		return (terminate_vars(&vars));
 	return (vars);
 }

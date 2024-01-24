@@ -6,48 +6,68 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 11:20:47 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:24:19 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	free_points(t_points **points)
+void	*free_points(t_points **points)
 {
+	t_points	*point;
 	t_points	*tmp;
 
-	tmp = *points;
-	while (tmp)
+	point = *points;
+	while (point)
 	{
-		free(tmp);
-		tmp = tmp->next;
+		tmp = point->next;
+		free(point);
+		point = tmp;
 	}
 	*points = NULL;
+	return (NULL);
 }
 
-void	free_coordinates(char **ptr)
+void	*free_coordinates(char **ptr)
 {
 	char	**tmp;
 
 	tmp = ptr;
-	while (*ptr)
+	while (*tmp)
 	{
-		free(*ptr++);
+		free(*tmp++);
 	}
-	free (tmp);
+	free (ptr);
+	return (NULL);
 }
 
-void	free_coords(t_coords **coords)
+void	*free_coords(t_coords **coords)
 {
 	t_coords	*coord;
+	t_coords	*tmp;
 
 	coord = *coords;
 	while (coord)
 	{
-		free_coordinates(coord->coordinate);
-		free_points(&coord->points);
-		free(coord);
-		coord = coord->next;
+		tmp = coord->next;
+		if (coord->coordinate)
+			free_coordinates(coord->coordinate);
+		if (coord->points)
+			free_points(&coord->points);
+		if (coord)
+			free(coord);
+		coord = tmp;
 	}
+	*coords = NULL;
+	return (NULL);
 }
 
+void	*terminate_vars(t_vars **vars)
+{
+	if (*vars && (*vars)->coords)
+		free_coords(&(*vars)->coords);
+	if (*vars)
+		free(*vars);
+	*vars = NULL;
+	return (NULL);
+}

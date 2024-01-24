@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/22 16:25:57 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:12:46 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_coords	*init_coords(t_coords **coords, char **data)
 	return (new_coord);
 }
 
-void	parse_coordinates(char *file_name, t_vars *vars)
+int	parse_coordinates(char *file_name, t_vars *vars)
 {
 	int			fd;
 	char		*line;
@@ -49,7 +49,7 @@ void	parse_coordinates(char *file_name, t_vars *vars)
 	if (fd == -1)
 	{
 		perror("Error opening the coordinates file");
-		exit(1);
+		return (1);
 	}
 	while (1)
 	{
@@ -58,12 +58,12 @@ void	parse_coordinates(char *file_name, t_vars *vars)
 			break ;
 		tmp = init_coords (&vars->coords, ft_split(line, ' '));
 		if (!ft_arraystrlen(tmp->coordinate))
-			clear_exit(tmp->coordinate, 1); // check this exit
+			return (1); // check this exit
 		if (ft_arraystrlen(tmp->coordinate) > vars->x)
 			vars->x = ft_arraystrlen(tmp->coordinate);
 		free(line);
 		tmp = tmp->next;
 		(vars->y)++;
 	}
-	close(fd);
+	return (close(fd));
 }
