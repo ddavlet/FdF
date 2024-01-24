@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 14:16:12 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:18:39 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ uint32_t	htoi_color(const char *str)
 {
 	uint32_t	i;
 	uint32_t	result;
-	uint32_t	t;
 
 	str += 3;
 	i = 0;
 	result = 0;
-	t = 0;
 	while (*str && *str != '\n')
 	{
 		if (*str >= '0' && *str <= '9')
@@ -76,7 +74,6 @@ uint32_t	htoi_color(const char *str)
 			return (UINT32_MAX);
 		}
 		result = result * 16 + i;
-		t++;
 	}
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:09 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 14:05:41 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:28:01 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	create_image(void *param)
 			clean_pixel(vars->img, x, y++);
 		x++;
 	}
-	x = 0;
 	put_iso_line(vars);
 	put_iso_column(vars);
 }

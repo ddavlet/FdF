@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 13:58:32 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:36:53 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_points	*init_points(t_coords *coords, uint32_t step_x,
 		}
 		i++;
 		points->next = NULL;
-		points = points->next;
+		points = points->next; // issue here better to change
 	}
 	return (coords->points);
 }

@@ -18,8 +18,8 @@ $(LIBFT) :
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(FLAGS) -g $(OBJ) $(LIBFT) libmlx42.a -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
-# $(CC) $(FLAGS) -g $(OBJ) $(LIBFT) libmlx42.a -Iinclude -lglfw -L"./glfw/3.3.9/lib" -o $(NAME)
+#	$(CC) $(FLAGS) -g $(OBJ) $(LIBFT) libmlx42.a -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+	$(CC) $(FLAGS) -g $(OBJ) $(LIBFT) libmlx42.a -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.9/lib" -o $(NAME)
 
 %.o: %.c
 	$(CC) -g $(FLAGS) -c $< -o $@
