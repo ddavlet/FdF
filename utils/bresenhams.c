@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:16:40 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 17:31:07 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:48:12 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_color	interpol_color(t_pixel pixel, float s)
 {
 	t_color	color;
 
-	color.red = (1 - s) * (pixel.color_to >> 16) + s * (pixel.color_fr >> 16);
-	color.green = (1 - s) * (pixel.color_to >> 8) + s * (pixel.color_fr >> 8);
-	color.blue = (1 - s) * (pixel.color_to & 0xFF) + s * (pixel.color_fr & 0xFF);
+	color.red = ((100 - s) * (pixel.color_to >> 16) + s * (pixel.color_fr >> 16)) / 100;
+	color.green = ((100 - s) * (pixel.color_to >> 8) + s * (pixel.color_fr >> 8)) / 100;
+	color.blue = ((100 - s) * (pixel.color_to & 0xFF) + s * (pixel.color_fr & 0xFF)) / 100;
 	color.alpha = 255;
 	return (color);
 }
@@ -69,7 +69,7 @@ void	put_pixel(mlx_image_t *img, t_pixel pixel, uint32_t y)
 		printf("iso_y: %u height: %u\n", pixel.y, img->height);
 	}
 	pixelstart = &img->pixels[(pixel.y * img->width + pixel.x) * BPP];
-	color = interpol_color(pixel, (float)(fabsf((float)y -(float)pixel.y)) / fabsf((float)pixel.d_y));
+	color = interpol_color(pixel, labs((long)y -(long)pixel.y) * 100 / labs((long)pixel.d_y));
 	draw_pixel(pixelstart, color);
 }
 

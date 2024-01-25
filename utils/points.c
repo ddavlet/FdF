@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 20:36:53 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:26:44 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	init_z_points(t_vars *vars)
 	int32_t		i;
 	int32_t		x;
 
-	// i = zmax(vars) - zmin(vars);
 	i = vars->x;
 	x = (int32_t)mmax(vars);
 	coord = vars->coords;
@@ -57,6 +56,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 	while (last->next)
 		last = last->next;
 	last->next = point;
+	point->next = NULL;
 	return (point);
 }
 
@@ -65,23 +65,20 @@ t_points	*init_points(t_coords *coords, uint32_t step_x,
 {
 	t_points		*points;
 	unsigned int	i;
-	int32_t			z;
 
 	i = 0;
 	points = coords->points;
 	while ((coords->coordinate)[i])
 	{
-		z = ft_atoi((coords->coordinate)[i]);
 		points = init_point(&coords->points, step_x * (i + 1),
-				step_y * line, z); // change z multiplier
+				step_y * line, ft_atoi((coords->coordinate)[i]));
 		if (!points)
 		{
 			perror("Failed to create one point");
 			return (free_points(&coords->points));
 		}
 		i++;
-		points->next = NULL;
-		points = points->next; // issue here better to change
+		points = points->next;
 	}
 	return (coords->points);
 }
@@ -128,8 +125,7 @@ void	init_colors_points(t_vars *vars)
 		{
 			points->color = UINT32_MAX;
 			if (ft_strchr((coord->coordinate)[i], ','))
-				points->color = htoi_color
-					(ft_strchr((coord->coordinate)[i], ','));
+				points->color = htoi_color(ft_strchr((coord->coordinate)[i], ','));
 			i++;
 			points = points->next;
 		}
