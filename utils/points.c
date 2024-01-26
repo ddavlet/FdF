@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/25 12:26:44 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/26 22:19:44 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_z_points(t_vars *vars)
 	int32_t		x;
 
 	i = vars->x;
-	x = (int32_t)mmax(vars);
+	x = (int32_t)xmax(vars);
 	coord = vars->coords;
 	while (coord)
 	{
@@ -29,6 +29,9 @@ void	init_z_points(t_vars *vars)
 		{
 			if (points->z != 0)
 				points->z = (int32_t)(float)points->z / (float)i * (float)x;
+				// points->z = points->z;
+			// (void)x;
+			// (void)i;
 			points = points->next;
 		}
 		coord = coord->next;
@@ -43,7 +46,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 
 	point = (t_points *)malloc(sizeof(t_points));
 	if (!point)
-		return (NULL); //deal with this return
+		return (NULL);
 	point->x = x;
 	point->y = y;
 	point->z = z;
@@ -83,6 +86,12 @@ t_points	*init_points(t_coords *coords, uint32_t step_x,
 	return (coords->points);
 }
 
+void	init_ext_values(t_vars *vars)
+{
+	yext(vars);
+	vars->zmax = zmax(vars);
+}
+
 t_coords	*init_pointcoord(t_coords **coords, t_vars *vars)
 {
 	t_coords	*coord;
@@ -103,9 +112,11 @@ t_coords	*init_pointcoord(t_coords **coords, t_vars *vars)
 		coord = coord->next;
 		i++;
 	}
-	init_z_points(vars);
+	if (zmax(vars) < 25)
+		init_z_points(vars);
 	init_colors_points(vars);
-	move_picture(vars);
+	// move_picture(vars);
+	init_ext_values(vars);
 	init_isometrics(vars);
 	return (*coords);
 }
@@ -123,9 +134,8 @@ void	init_colors_points(t_vars *vars)
 		i = 0;
 		while (points)
 		{
-			points->color = UINT32_MAX;
-			if (ft_strchr((coord->coordinate)[i], ','))
-				points->color = htoi_color(ft_strchr((coord->coordinate)[i], ','));
+			points->color = 0;
+			points->color = htoi_color(ft_strchr((coord->coordinate)[i], ','));
 			i++;
 			points = points->next;
 		}
@@ -143,7 +153,7 @@ void	move_picture(t_vars *vars)
 
 	// zn = zmin(vars);
 	zm = zmax(vars);
-	xm = mmax(vars);
+	xm = xmax(vars);
 	coord = vars->coords;
 	while (coord)
 	{

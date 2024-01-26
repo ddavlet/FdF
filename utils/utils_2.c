@@ -6,32 +6,36 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:32:17 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/23 13:10:51 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/26 22:24:46 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-uint32_t	ymin(t_vars *vars)
+void	yext(t_vars *vars)
 {
 	t_coords	*coord;
 	t_points	*points;
-	uint32_t	i;
 
-	i = UINT32_MAX;
+	vars->ymax = 0;
+	vars->ymin = UINT32_MAX;
+	vars->xmax = 0;
 	coord = vars->coords;
 	while (coord)
 	{
 		points = coord->points;
 		while (points)
 		{
-			if (points->y < i)
-				i = points->y;
+			if (points->y > vars->ymax)
+				vars->ymax = points->y;
+			if (points->y < vars->ymin)
+				vars->ymin = points->y;
+			if (points->x > vars->xmax)
+				vars->xmax = points->x;
 			points = points->next;
 		}
 		coord = coord->next;
 	}
-	return (i);
 }
 
 /*Protection of iso point overflow is in zoom hook*/
@@ -108,7 +112,7 @@ int32_t	zmin(t_vars *vars)
 	return (i);
 }
 
-uint32_t	mmax(t_vars *vars)
+uint32_t	xmax(t_vars *vars)
 {
 	t_coords	*coord;
 	t_points	*points;

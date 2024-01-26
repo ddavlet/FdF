@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:15 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 17:37:20 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/25 20:55:02 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	draw_column_negslope(t_vars *vars, t_points *line, t_points *next_line)
 	pixel.slope_error = 2 * labs(pixel.d_x) - pixel.d_y;
 	pixel.x = next_line->iso_x;
 	pixel.y = next_line->iso_y;
-	pixel.color_fr = line->color;
-	pixel.color_to = next_line->color;
+	pixel.color_fr = next_line->color;
+	pixel.color_to = line->color;
 	while (pixel.y < line->iso_y)
 	{
 		if (pixel.slope_error > 0)
@@ -114,8 +114,8 @@ void	draw_line_negslope(t_vars *vars, t_points *column, t_points *next_column)
 	pixel.d_y = (long)column->iso_y - (long)next_column->iso_y;
 	pixel.x = next_column->iso_x;
 	pixel.y = next_column->iso_y;
-	pixel.color_fr = column->color;
-	pixel.color_to = next_column->color;
+	pixel.color_fr = next_column->color;
+	pixel.color_to = column->color;
 	pixel.slope_error = 2 * labs(pixel.d_y) - pixel.d_x;
 	while (pixel.x < column->iso_x)
 	{

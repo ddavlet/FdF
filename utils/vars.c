@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 14:14:37 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/26 21:53:04 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ mlx_image_t	*init_image(t_vars *vars)
 	{
 		mlx_close_window(vars->mlx);
 		puts(mlx_strerror(mlx_errno));
-		return (NULL); // handle this NULL
+		return (NULL);
 	}
 	return (vars->img);
 }
@@ -71,8 +71,8 @@ t_vars	*init_vars(char *file_name)
 	vars->coords = NULL;
 	if (parse_coordinates(file_name, vars)) // check if width or height is 0 || ther is 1 point 1 line 1 column
 		return (terminate_vars(&vars));
-	vars->width = limits(vars->x, vars->x, 500);
-	vars->height = limits(vars->y, vars->x, 500) / 1.8; //change max according to number of entries
+	vars->width = limits(vars->x, vars->x, 800);
+	vars->height = limits(vars->y, vars->x, 600) / 1.8; //change max according to number of entries
 	if (!init_pointcoord(&vars->coords, vars))
 		return (terminate_vars(&vars));
 	if (!init_window(vars))

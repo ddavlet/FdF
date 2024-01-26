@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 17:08:04 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/26 22:22:20 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ typedef struct s_vars
 	uint32_t	height;
 	uint32_t	x;
 	uint32_t	y;
+	uint32_t	ymax;
+	uint32_t	ymin;
+	uint32_t	xmax;
+	uint32_t	zmax;
 }				t_vars;
 
 typedef struct s_color
@@ -110,12 +114,11 @@ void		*terminate_vars(t_vars **vars);
 
 /*Other utils*/
 uint32_t	ft_arraystrlen(char **array);
-void		clear_exit(char **ptr, int error);
 uint32_t	limits(uint32_t num, uint32_t num2, uint32_t max);
 int32_t		zmax(t_vars *vars);
 int32_t		zmin(t_vars *vars);
-uint32_t	mmax(t_vars *vars);
-uint32_t	ymin(t_vars *vars);
+uint32_t	xmax(t_vars *vars);
+void		yext(t_vars *vars);
 uint32_t	iso(t_vars *vars, t_points *point, char axes);
 uint32_t	min_max_point(t_vars *vars, char axes);
 void		init_colors_points(t_vars *vars);
