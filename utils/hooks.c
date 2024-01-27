@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:26:20 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 13:42:21 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/27 19:45:35 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,19 @@ void	ft_hook_buttons(void *param)
 		vars->img->nstances[0].x -= 5;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		vars->img->nstances[0].x += 5;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_1))
+		change_projection(vars, iso);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_2))
+		change_projection(vars, iso_2);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_3))
+		change_projection(vars, iso_3);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_4))
+		change_projection(vars, iso_4);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_5))
+		change_projection(vars, iso_5);
+	for (keys_t i = 32; i < 349; i++)
+	{
+		if (mlx_is_key_down(vars->mlx, i))
+			printf("%i\n", i);
+	}
 }

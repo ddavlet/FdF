@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:16:40 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/25 12:48:12 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:42:53 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	draw_pixel(uint8_t *pixel, t_color color)
 {
-	*(pixel++) = color.alpha;
+	*(pixel++) = color.red;
 	*(pixel++) = color.green;
 	*(pixel++) = color.blue;
 	*(pixel++) = (uint8_t)(0xFF);
@@ -47,7 +47,7 @@ t_color	interpol_color(t_pixel pixel, float s)
 	color.red = ((100 - s) * (pixel.color_to >> 16) + s * (pixel.color_fr >> 16)) / 100;
 	color.green = ((100 - s) * (pixel.color_to >> 8) + s * (pixel.color_fr >> 8)) / 100;
 	color.blue = ((100 - s) * (pixel.color_to & 0xFF) + s * (pixel.color_fr & 0xFF)) / 100;
-	color.alpha = 255;
+	// color.alpha = 255;
 	return (color);
 }
 

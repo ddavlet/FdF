@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/26 22:23:59 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:53:43 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,6 @@ uint32_t	ft_arraystrlen(char **array)
 		i++;
 	return (i);
 }
-
-// void	clear_exit(char **ptr, int error) // what is that for?
-// {
-// 	char	**tmp;
-
-// 	tmp = ptr;
-// 	if (ptr)
-// 	{
-// 		while (*ptr)
-// 			free(*ptr++);
-// 		free(tmp);
-// 	}
-// 	if (error)
-// 	{
-// 		perror("Error parsing while file");
-// 		exit (1);
-// 	}
-// }
 
 uint32_t	limits(uint32_t num, uint32_t num2, uint32_t max)
 {
@@ -81,34 +63,3 @@ uint32_t	htoi_color(const char *str)
 	return (result);
 }
 
-uint32_t	iso(t_vars *vars, t_points *point, char axes)
-{
-	uint32_t	x_iso;
-	uint32_t	y_iso;
-
-	x_iso = (uint32_t)((float)point->x + 1.9 * (float)point->y)
-		- 1.9 * vars->ymin;
-	y_iso = (uint32_t)((float)point->y - (float)point->z
-			/ sqrt(2) - point->x / sqrt(6) + vars->zmax + vars->xmax);
-	if (axes == 'x')
-		return (x_iso);
-	else
-		return (y_iso);
-}
-
-uint32_t	iso_2(t_vars *vars, t_points *point, char axes)
-{
-	uint32_t	x_iso;
-	uint32_t	y_iso;
-
-	x_iso = (uint32_t)(((float)point->x - (float)point->y) * 0.8944
-			- vars->coords->points->x + vars->ymax);
-	y_iso = (uint32_t)(((float)point->x + (float)point->y + 1) * 0.4472
-			- (float)point->z - vars->coords->points->x + vars->zmax);
-	// x_iso = point->x;
-	// y_iso = point->y;
-	if (axes == 'x')
-		return (x_iso);
-	else
-		return (y_iso);
-}

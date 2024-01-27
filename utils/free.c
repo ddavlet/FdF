@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 14:24:19 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/27 18:08:39 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	*terminate_vars(t_vars **vars)
 {
 	if (*vars && (*vars)->coords)
 		free_coords(&(*vars)->coords);
+	// if (*vars && (*vars)->mlx)
+	// 	mlx_terminate((*vars)->mlx);
 	if (*vars)
 		free(*vars);
 	*vars = NULL;

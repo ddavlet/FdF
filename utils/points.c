@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/26 22:19:44 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:25:20 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,8 @@ t_coords	*init_pointcoord(t_coords **coords, t_vars *vars)
 	if (zmax(vars) < 25)
 		init_z_points(vars);
 	init_colors_points(vars);
-	// move_picture(vars);
 	init_ext_values(vars);
-	init_isometrics(vars);
+	init_isometrics(vars, iso_2);
 	return (*coords);
 }
 

@@ -6,13 +6,31 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/26 21:53:04 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/01/27 20:15:17 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	init_isometrics(t_vars *vars)
+void	change_projection(t_vars *vars,uint32_t (*iso)(t_vars *, t_points *, char))
+{
+	mlx_image_t	*tmp;
+
+	tmp = vars->img;
+	init_isometrics(vars, iso);
+	if (!init_image(vars))
+		terminate_vars(&vars);
+	if (mlx_image_to_window(vars->mlx, vars->img,
+			LAYOUT_WIDTH / 4, LAYOUT_HEIGHT / 4) == -1)
+	{
+		mlx_close_window(vars->mlx);
+		perror(mlx_strerror(mlx_errno));
+		return ;
+	}
+	mlx_delete_image(vars->mlx, tmp);
+}
+
+void	init_isometrics(t_vars *vars,uint32_t (*iso)(t_vars *, t_points *, char))
 {
 	t_coords	*coord;
 	t_points	*point;
@@ -33,6 +51,7 @@ void	init_isometrics(t_vars *vars)
 
 void	*init_window(t_vars *vars)
 {
+	mlx_set_setting(MLX_DECORATED, true);
 	vars->mlx = mlx_init(min_max_point(vars, 'x') + LAYOUT_WIDTH,
 			min_max_point(vars, 'y') + LAYOUT_HEIGHT, WINDOW_NAME, RESIZEABLE);
 	if (!vars->mlx)
@@ -45,8 +64,8 @@ void	*init_window(t_vars *vars)
 
 mlx_image_t	*init_image(t_vars *vars)
 {
-	vars->img = mlx_new_image(vars->mlx, vars->mlx->width - LAYOUT_WIDTH / 2,
-			vars->mlx->height - LAYOUT_HEIGHT / 2);
+	vars->img = mlx_new_image(vars->mlx, min_max_point(vars, 'x') + LAYOUT_WIDTH / 2,
+			min_max_point(vars, 'y') + LAYOUT_HEIGHT / 2);
 	if (!vars->img)
 	{
 		mlx_close_window(vars->mlx);
@@ -73,6 +92,7 @@ t_vars	*init_vars(char *file_name)
 		return (terminate_vars(&vars));
 	vars->width = limits(vars->x, vars->x, 800);
 	vars->height = limits(vars->y, vars->x, 600) / 1.8; //change max according to number of entries
+	// vars->projec = iso_2;
 	if (!init_pointcoord(&vars->coords, vars))
 		return (terminate_vars(&vars));
 	if (!init_window(vars))
