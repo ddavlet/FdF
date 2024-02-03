@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/27 18:08:39 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:00:51 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
 void	*free_points(t_points **points)
 {

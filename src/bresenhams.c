@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:16:40 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/27 15:42:53 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:22:08 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
 void	draw_pixel(uint8_t *pixel, t_color color)
 {
@@ -20,33 +20,16 @@ void	draw_pixel(uint8_t *pixel, t_color color)
 	*(pixel++) = (uint8_t)(0xFF);
 }
 
-// void	put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
-// {
-// 	uint8_t	*pixelstart;
-
-// 	if (!img)
-// 		ft_putendl_fd("Image does not exist", 2);
-// 	if (!(x < img->width))
-// 	{
-// 		ft_putendl_fd("Pixel is out of bounds (axes x)", 2); // close window
-// 		printf("iso_x: %u width: %u\n", x, img->width);
-// 	}
-// 	if (!(y < img->height))
-// 	{
-// 		ft_putendl_fd("Pixel is out of bounds (axes y)", 2); // close window
-// 		printf("iso_y: %u height: %u\n", y, img->height);
-// 	}
-// 	pixelstart = &img->pixels[(y * img->width + x) * BPP];
-// 	draw_pixel(pixelstart, color);
-// }
-
 t_color	interpol_color(t_pixel pixel, float s)
 {
 	t_color	color;
 
-	color.red = ((100 - s) * (pixel.color_to >> 16) + s * (pixel.color_fr >> 16)) / 100;
-	color.green = ((100 - s) * (pixel.color_to >> 8) + s * (pixel.color_fr >> 8)) / 100;
-	color.blue = ((100 - s) * (pixel.color_to & 0xFF) + s * (pixel.color_fr & 0xFF)) / 100;
+	color.red = ((100 - s) * (pixel.color_to >> 16)
+			+ s * (pixel.color_fr >> 16)) / 100;
+	color.green = ((100 - s) * (pixel.color_to >> 8)
+			+ s * (pixel.color_fr >> 8)) / 100;
+	color.blue = ((100 - s) * (pixel.color_to & 0xFF)
+			+ s * (pixel.color_fr & 0xFF)) / 100;
 	// color.alpha = 255;
 	return (color);
 }
@@ -69,7 +52,8 @@ void	put_pixel(mlx_image_t *img, t_pixel pixel, uint32_t y)
 		printf("iso_y: %u height: %u\n", pixel.y, img->height);
 	}
 	pixelstart = &img->pixels[(pixel.y * img->width + pixel.x) * BPP];
-	color = interpol_color(pixel, labs((long)y -(long)pixel.y) * 100 / labs((long)pixel.d_y));
+	color = interpol_color(pixel, labs((long)y -(long)pixel.y)
+			* 100 / (labs((long)pixel.d_y) + 1));
 	draw_pixel(pixelstart, color);
 }
 

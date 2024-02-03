@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/27 19:45:52 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 14:08:24 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define FDF_H
 
 // # include <mlx.h>
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 # include <string.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# include "./include/MLX42/MLX42_Int.h"
-# include "./include/MLX42/MLX42.h"
+# include "../include/MLX42/MLX42_Int.h"
+# include "../include/MLX42/MLX42.h"
 # include <limits.h>
 
 /*Standard definitions*/
@@ -32,6 +32,7 @@
 # define SIZE 30
 # define LAYOUT_WIDTH 50
 # define LAYOUT_HEIGHT 50
+# define PI 3.14159265
 # ifndef RESIZEABLE
 #  define RESIZEABLE true
 # endif
@@ -54,15 +55,8 @@ typedef struct s_point
 	uint32_t		color;
 	struct s_point	*next;
 }				t_points;
-// typedef enum
-// {
-// 	ISO_1,
-// 	ISO_2
-// }		t_projec;
 
-typedef struct s_vars t_vars;
-
-typedef	uint32_t (*t_projec)(t_vars *, t_points *, char);
+typedef struct s_vars	t_vars;
 
 typedef struct s_vars
 {
@@ -78,7 +72,7 @@ typedef struct s_vars
 	uint32_t	ymin;
 	uint32_t	xmax;
 	uint32_t	zmax;
-	t_projec	projec;
+	float		angle;
 }				t_vars;
 
 typedef struct s_color
@@ -110,7 +104,8 @@ int			parse_coordinates(char *file_name, t_vars *vars);
 void		move_picture(t_vars *vars);
 
 /*Points functions*/
-void		init_isometrics(t_vars *vars,uint32_t (*iso)(t_vars *, t_points *, char));
+void		init_isometrics(t_vars *vars,
+				uint32_t (*iso)(t_vars *, t_points *, char));
 t_points	*init_point(t_points **points, uint32_t x, uint32_t y, int32_t z);
 t_points	*init_points(t_coords *coords, uint32_t step_x,
 				uint32_t step_y, uint32_t line);
@@ -140,11 +135,11 @@ uint32_t	iso(t_vars *vars, t_points *point, char axes);
 uint32_t	iso_2(t_vars *vars, t_points *point, char axes);
 uint32_t	iso_3(t_vars *vars, t_points *point, char axes);
 uint32_t	iso_4(t_vars *vars, t_points *point, char axes);
-uint32_t	iso_5(t_vars *vars, t_points *point, char axes);
 
 /*Hooks*/
 void		ft_hook_buttons(void *param);
-void		change_projection(t_vars *vars, uint32_t (*iso)(t_vars *, t_points *, char));
+void		change_projection(t_vars *vars,
+				uint32_t (*iso)(t_vars *, t_points *, char));
 
 /*Colors & pixels*/
 // void		put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);

@@ -6,13 +6,14 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/27 20:15:17 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 14:10:38 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
-void	change_projection(t_vars *vars,uint32_t (*iso)(t_vars *, t_points *, char))
+void	change_projection(t_vars *vars,
+		uint32_t (*iso)(t_vars *, t_points *, char))
 {
 	mlx_image_t	*tmp;
 
@@ -30,7 +31,8 @@ void	change_projection(t_vars *vars,uint32_t (*iso)(t_vars *, t_points *, char))
 	mlx_delete_image(vars->mlx, tmp);
 }
 
-void	init_isometrics(t_vars *vars,uint32_t (*iso)(t_vars *, t_points *, char))
+void	init_isometrics(t_vars *vars,
+		uint32_t (*iso)(t_vars *, t_points *, char))
 {
 	t_coords	*coord;
 	t_points	*point;
@@ -57,14 +59,15 @@ void	*init_window(t_vars *vars)
 	if (!vars->mlx)
 	{
 		puts(mlx_strerror(mlx_errno));
-		return (NULL); // handle this NULL
+		return (NULL);
 	}
 	return (vars->mlx);
 }
 
 mlx_image_t	*init_image(t_vars *vars)
 {
-	vars->img = mlx_new_image(vars->mlx, min_max_point(vars, 'x') + LAYOUT_WIDTH / 2,
+	vars->img = mlx_new_image(vars->mlx,
+			min_max_point(vars, 'x') + LAYOUT_WIDTH / 2,
 			min_max_point(vars, 'y') + LAYOUT_HEIGHT / 2);
 	if (!vars->img)
 	{
@@ -88,10 +91,11 @@ t_vars	*init_vars(char *file_name)
 	vars->x = 0;
 	vars->y = 0;
 	vars->coords = NULL;
+	vars->angle = 30;
 	if (parse_coordinates(file_name, vars)) // check if width or height is 0 || ther is 1 point 1 line 1 column
 		return (terminate_vars(&vars));
 	vars->width = limits(vars->x, vars->x, 800);
-	vars->height = limits(vars->y, vars->x, 600) / 1.8; //change max according to number of entries
+	vars->height = limits(vars->y, vars->x, 600) / 1.8;
 	// vars->projec = iso_2;
 	if (!init_pointcoord(&vars->coords, vars))
 		return (terminate_vars(&vars));

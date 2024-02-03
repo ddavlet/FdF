@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 12:58:41 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/24 12:59:42 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:00:24 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
 void	clean_pixel(mlx_image_t *img, uint32_t x, uint32_t y)
 {

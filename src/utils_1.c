@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/27 15:53:43 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 14:18:59 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
 uint32_t	ft_arraystrlen(char **array)
 {
@@ -27,7 +27,7 @@ uint32_t	ft_arraystrlen(char **array)
 uint32_t	limits(uint32_t num, uint32_t num2, uint32_t max)
 {
 	if (num < 15 && num2 < 15)
-		max = 400;
+		max = 300;
 	if (num2 >= num)
 		num = (uint32_t)(((float)num / (float)num2) * (float)max);
 	else

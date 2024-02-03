@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 23:55:34 by W2Wizard          #+#    #+#             */
-/*   Updated: 2024/01/24 20:52:11 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 12:53:45 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # if defined(__APPLE__)
 #  define GL_SILENCE_DEPRECATION
 # endif
-// # include <GLFW/glfw3.h>
-# include "/opt/homebrew/Cellar/glfw/3.3.9/include/GLFW/glfw3.h"
+# include <GLFW/glfw3.h>
+// # include "/opt/homebrew/Cellar/glfw/3.3.9/include/GLFW/glfw3.h"
 # include <stdlib.h>
 # include <memory.h>
 # include <stdio.h>

@@ -6,11 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/27 16:25:20 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:13:45 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
 void	init_z_points(t_vars *vars)
 {
@@ -29,9 +29,6 @@ void	init_z_points(t_vars *vars)
 		{
 			if (points->z != 0)
 				points->z = (int32_t)(float)points->z / (float)i * (float)x;
-				// points->z = points->z;
-			// (void)x;
-			// (void)i;
 			points = points->next;
 		}
 		coord = coord->next;
@@ -50,6 +47,7 @@ t_points	*init_point(t_points **points, uint32_t x,
 	point->x = x;
 	point->y = y;
 	point->z = z;
+	point->next = NULL;
 	if (!*points)
 	{
 		*points = point;
@@ -146,7 +144,6 @@ void	move_picture(t_vars *vars)
 {
 	t_coords	*coord;
 	t_points	*point;
-	// int32_t		zn;
 	int32_t		zm;
 	uint32_t	xm;
 
@@ -159,8 +156,6 @@ void	move_picture(t_vars *vars)
 		point = coord->points;
 		while (point)
 		{
-			// if (zn < 0)
-				// point->x += (uint32_t)(abs(zn) / sqrt(2));
 			if (zm != 0 || xm != 0)
 				point->y += (uint32_t)(abs(zm) / sqrt(2) + xm / sqrt(6));
 			point = point->next;

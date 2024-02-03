@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils_test.c                                  :+:      :+:    :+:   */
+/*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:15 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/25 20:55:02 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:00:57 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
 /*iso_x and iso_y should never overflow because of screen limit*/
 void	draw_line_slope(t_vars *vars, t_points *column, t_points *next_column)

@@ -6,21 +6,24 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/01/27 20:19:54 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 14:17:29 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../inc/fdf.h"
 
 uint32_t	iso(t_vars *vars, t_points *point, char axes)
 {
 	uint32_t	x_iso;
 	uint32_t	y_iso;
+	float		rad;
 
-	x_iso = (uint32_t)((float)point->x + (float)point->y) * 0.8944
-		- vars->coords->points->x - 0.8944 * vars->ymin;
-	y_iso = (uint32_t)((- (float)point->x + (float)point->y + 1) * 0.4472
-			- (float)point->z + vars->coords->points->x + vars->zmax + vars->xmax * 0.4472);
+	rad = vars->angle * PI / 180;
+	x_iso = (uint32_t)((float)point->x + (float)point->y) * cos(rad)
+		- (float)vars->coords->points->x - (0.5 * (float)vars->ymin);
+	y_iso = (uint32_t)((- (float)point->x + (float)point->y + 1) * sin(rad)
+			- (float)point->z + (float)vars->coords->points->x + vars->zmax
+			+ vars->xmax * sin(rad));
 	if (axes == 'x')
 		return (x_iso);
 	else
@@ -31,11 +34,14 @@ uint32_t	iso_2(t_vars *vars, t_points *point, char axes)
 {
 	uint32_t	x_iso;
 	uint32_t	y_iso;
+	float		rad;
 
-	x_iso = (uint32_t)(((float)point->x - (float)point->y + 1) * 0.8944
+	rad = vars->angle * PI / 180;
+	x_iso = (uint32_t)(((float)point->x - (float)point->y + 1) * cos(rad)
 			- vars->coords->points->x + vars->ymax);
-	y_iso = (uint32_t)(((float)point->x + (float)point->y + 1) * 0.4472
-			- (float)point->z - vars->coords->points->x + vars->zmax);
+	y_iso = (uint32_t)(((float)point->x + (float)point->y + 1) * sin(rad)
+			- (float)point->z - (float)vars->coords->points->x
+			+ (float)vars->zmax);
 	if (axes == 'x')
 		return (x_iso);
 	else
@@ -46,11 +52,13 @@ uint32_t	iso_3(t_vars *vars, t_points *point, char axes)
 {
 	uint32_t	x_iso;
 	uint32_t	y_iso;
+	float		rad;
 
-	x_iso = (uint32_t)((float)point->x + (float)point->y *  0.8944 + 1)
-		- vars->coords->points->x - 0.8944 * vars->ymin;
-	y_iso = (uint32_t)(((float)point->y + 1) * 0.4472
-			- (float)point->z + vars->coords->points->x + vars->zmax);
+	rad = vars->angle * PI / 180;
+	x_iso = (uint32_t)((float)point->x + (float)point->y * cos(rad) + 1)
+		- vars->coords->points->x - cos(rad) * vars->ymin;
+	y_iso = (uint32_t)(((float)point->y + 1) * sin(rad) - (float)point->z
+			+ (float)vars->coords->points->x + (float)vars->zmax);
 	if (axes == 'x')
 		return (x_iso);
 	else
@@ -61,25 +69,14 @@ uint32_t	iso_4(t_vars *vars, t_points *point, char axes)
 {
 	uint32_t	x_iso;
 	uint32_t	y_iso;
+	float		rad;
 
-	x_iso = (uint32_t)((float)point->x + (float)point->y + 1) * 0.8944 * 0.7
-		- vars->coords->points->x - 0.8944 * vars->ymin * 0.5;
-	y_iso = (uint32_t)((- (float)point->x + (float)point->y + 1) * 0.8944 * 0.7
-			- (float)point->z + vars->coords->points->x + vars->zmax + vars->xmax * 0.8944 * 0.7);
-	if (axes == 'x')
-		return (x_iso);
-	else
-		return (y_iso);
-}
-
-uint32_t	iso_5(t_vars *vars, t_points *point, char axes)
-{
-	uint32_t	x_iso;
-	uint32_t	y_iso;
-
-	(void)vars;
-	x_iso = (uint32_t)((float)point->x + (float)point->z) * 0.8944 * 0.5;
-	y_iso = (uint32_t)((float)point->y + (float)point->z) * 0.8944 * 0.5;
+	rad = vars->angle * PI / 180;
+	x_iso = (uint32_t)((float)point->x + (float)point->y + 1) * cos(rad) * 0.7
+		- ((float)vars->coords->points->x + (float)vars->ymin) * sin(rad);
+	y_iso = (uint32_t)((- (float)point->x + (float)point->y + 1) * cos(rad) * 0.7
+			- (float)point->z + (float)vars->coords->points->x
+			+ (float)vars->zmax + (float)vars->xmax * cos(rad) * 0.7);
 	if (axes == 'x')
 		return (x_iso);
 	else
