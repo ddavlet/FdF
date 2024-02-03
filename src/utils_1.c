@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 16:14:25 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 17:18:02 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,5 @@ t_color	interpol_color(t_pixel pixel, float s)
 			+ s * (pixel.color_fr >> 8)) / 100;
 	color.blue = ((100 - s) * (pixel.color_to & 0xFF)
 			+ s * (pixel.color_fr & 0xFF)) / 100;
-	// color.alpha = 255;
 	return (color);
 }

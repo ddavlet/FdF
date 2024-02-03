@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 16:19:58 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:45:48 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ mlx_image_t	*init_image(t_vars *vars);
 /*Coordinates functions*/
 t_coords	*init_coords(t_coords **coords, char **data);
 int			parse_coordinates(char *file_name, t_vars *vars);
-void		move_picture(t_vars *vars);
 
 /*Points functions*/
 void		init_isometrics(t_vars *vars,
@@ -110,7 +109,6 @@ t_points	*init_point(t_points **points, uint32_t x, uint32_t y, int32_t z);
 t_points	*init_points(t_coords *coords, uint32_t step_x,
 				uint32_t step_y, uint32_t line);
 t_coords	*init_pointcoord(t_coords **coords, t_vars *vars);
-void		move_picture(t_vars *vars);
 
 /*Terminate and free functions*/
 void		*free_points(t_points **points);

@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:02:30 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 13:13:45 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:45:37 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,50 +116,4 @@ t_coords	*init_pointcoord(t_coords **coords, t_vars *vars)
 	init_ext_values(vars);
 	init_isometrics(vars, iso_2);
 	return (*coords);
-}
-
-void	init_colors_points(t_vars *vars)
-{
-	t_coords	*coord;
-	t_points	*points;
-	uint32_t	i;
-
-	coord = vars->coords;
-	while (coord)
-	{
-		points = coord->points;
-		i = 0;
-		while (points)
-		{
-			points->color = 0;
-			points->color = htoi_color(ft_strchr((coord->coordinate)[i], ','));
-			i++;
-			points = points->next;
-		}
-		coord = coord->next;
-	}
-}
-
-void	move_picture(t_vars *vars)
-{
-	t_coords	*coord;
-	t_points	*point;
-	int32_t		zm;
-	uint32_t	xm;
-
-	// zn = zmin(vars);
-	zm = zmax(vars);
-	xm = xmax(vars);
-	coord = vars->coords;
-	while (coord)
-	{
-		point = coord->points;
-		while (point)
-		{
-			if (zm != 0 || xm != 0)
-				point->y += (uint32_t)(abs(zm) / sqrt(2) + xm / sqrt(6));
-			point = point->next;
-		}
-		coord = coord->next;
-	}
 }

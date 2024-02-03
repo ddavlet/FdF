@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 14:17:29 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 17:38:26 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ uint32_t	iso_2(t_vars *vars, t_points *point, char axes)
 
 	rad = vars->angle * PI / 180;
 	x_iso = (uint32_t)(((float)point->x - (float)point->y + 1) * cos(rad)
-			- vars->coords->points->x + vars->ymax);
+			- (float)vars->coords->points->x
+			+ ((float)vars->ymax + (float)vars->xmax) * cos(rad));
 	y_iso = (uint32_t)(((float)point->x + (float)point->y + 1) * sin(rad)
-			- (float)point->z - (float)vars->coords->points->x
+			- (float)point->z - (float)vars->coords->points->x * sin(rad)
 			+ (float)vars->zmax);
 	if (axes == 'x')
 		return (x_iso);
@@ -74,7 +75,7 @@ uint32_t	iso_4(t_vars *vars, t_points *point, char axes)
 	rad = vars->angle * PI / 180;
 	x_iso = (uint32_t)((float)point->x + (float)point->y + 1) * cos(rad) * 0.7
 		- ((float)vars->coords->points->x + (float)vars->ymin) * sin(rad);
-	y_iso = (uint32_t)((- (float)point->x + (float)point->y + 1) * cos(rad) * 0.7
+	y_iso = (uint32_t)(((float)point->y + 1) - (float)point->x * cos(rad) * 0.7
 			- (float)point->z + (float)vars->coords->points->x
 			+ (float)vars->zmax + (float)vars->xmax * cos(rad) * 0.7);
 	if (axes == 'x')

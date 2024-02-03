@@ -6,25 +6,11 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:26:20 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 14:14:39 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:43:27 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
-
-void	change_z(uint32_t *z, char sign) // ??
-{
-	if (sign == '-')
-	{
-		if ((*z) > 0)
-			(*z) -= 1;
-	}
-	else
-	{
-		if ((*z) < 15)
-			(*z) += 1;
-	}
-}
 
 void	ft_hook_buttons(void *param)
 {
@@ -49,8 +35,4 @@ void	ft_hook_buttons(void *param)
 		change_projection(vars, iso_3);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_4))
 		change_projection(vars, iso_4);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_E))
-		vars->angle -= 1;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_Q))
-		vars->angle += 1;
 }

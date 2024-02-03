@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:15 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 16:41:38 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 17:27:36 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,6 @@ void	draw_line_negslope(t_vars *vars,
 		else
 			pixel.slope_error += 2 * labs(pixel.d_y);
 		pixel.x++;
-		put_pixel(vars->img, pixel, column->iso_x);
+		put_pixel(vars->img, pixel, column->iso_y);
 	}
 }

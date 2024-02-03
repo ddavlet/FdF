@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 14:10:38 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 17:40:44 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,10 @@ t_vars	*init_vars(char *file_name)
 	vars->y = 0;
 	vars->coords = NULL;
 	vars->angle = 30;
-	if (parse_coordinates(file_name, vars)) // check if width or height is 0 || ther is 1 point 1 line 1 column
+	if (parse_coordinates(file_name, vars))
 		return (terminate_vars(&vars));
 	vars->width = limits(vars->x, vars->x, 800);
 	vars->height = limits(vars->y, vars->x, 600) / 1.8;
-	// vars->projec = iso_2;
 	if (!init_pointcoord(&vars->coords, vars))
 		return (terminate_vars(&vars));
 	if (!init_window(vars))
