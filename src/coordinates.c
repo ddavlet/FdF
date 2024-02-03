@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 13:01:00 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:17:22 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	parse_coordinates(char *file_name, t_vars *vars)
 			break ;
 		tmp = init_coords (&vars->coords, ft_split(line, ' '));
 		if (!ft_arraystrlen(tmp->coordinate))
-			return (1); // check this exit
+			return (1);
 		if (ft_arraystrlen(tmp->coordinate) > vars->x)
 			vars->x = ft_arraystrlen(tmp->coordinate);
 		free(line);

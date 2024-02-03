@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:32:17 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 13:00:27 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:15:08 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,6 @@ int32_t	zmax(t_vars *vars)
 		while (points)
 		{
 			if (points->z > i)
-				i = points->z;
-			points = points->next;
-		}
-		coord = coord->next;
-	}
-	return (i);
-}
-
-int32_t	zmin(t_vars *vars)
-{
-	t_coords	*coord;
-	t_points	*points;
-	int32_t		i;
-
-	i = INT32_MAX;
-	coord = vars->coords;
-	while (coord)
-	{
-		points = coord->points;
-		while (points)
-		{
-			if (points->z < i)
 				i = points->z;
 			points = points->next;
 		}

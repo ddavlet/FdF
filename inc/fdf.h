@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 14:08:24 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:19:58 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void		*terminate_vars(t_vars **vars);
 uint32_t	ft_arraystrlen(char **array);
 uint32_t	limits(uint32_t num, uint32_t num2, uint32_t max);
 int32_t		zmax(t_vars *vars);
-int32_t		zmin(t_vars *vars);
 uint32_t	xmax(t_vars *vars);
 void		yext(t_vars *vars);
 uint32_t	min_max_point(t_vars *vars, char axes);
@@ -142,9 +141,7 @@ void		change_projection(t_vars *vars,
 				uint32_t (*iso)(t_vars *, t_points *, char));
 
 /*Colors & pixels*/
-// void		put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
 void		put_pixel(mlx_image_t *img, t_pixel pixel, uint32_t y);
-// void		draw_pixel(uint8_t *pixel, uint32_t color);
 void		draw_pixel(uint8_t *pixel, t_color color);
 
 /*Maths function*/
@@ -160,6 +157,7 @@ void		draw_column_slope(t_vars *vars, t_points *line,
 				t_points *next_line);
 void		draw_column_negslope(t_vars *vars, t_points *line,
 				t_points *next_line);
+t_color		interpol_color(t_pixel pixel, float s);
 void		put_iso_column(t_vars *vars);
 void		put_iso_line(t_vars *vars);
 

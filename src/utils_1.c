@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 14:18:59 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:14:25 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,24 @@ uint32_t	htoi_color(const char *str)
 	return (result);
 }
 
+void	draw_pixel(uint8_t *pixel, t_color color)
+{
+	*(pixel++) = color.red;
+	*(pixel++) = color.green;
+	*(pixel++) = color.blue;
+	*(pixel++) = (uint8_t)(0xFF);
+}
+
+t_color	interpol_color(t_pixel pixel, float s)
+{
+	t_color	color;
+
+	color.red = ((100 - s) * (pixel.color_to >> 16)
+			+ s * (pixel.color_fr >> 16)) / 100;
+	color.green = ((100 - s) * (pixel.color_to >> 8)
+			+ s * (pixel.color_fr >> 8)) / 100;
+	color.blue = ((100 - s) * (pixel.color_to & 0xFF)
+			+ s * (pixel.color_fr & 0xFF)) / 100;
+	// color.alpha = 255;
+	return (color);
+}
