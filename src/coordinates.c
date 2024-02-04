@@ -6,11 +6,33 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:51:55 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 16:17:22 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/04 13:14:31 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
+
+int	check_coordinates(t_coords *coord)
+{
+	t_coords	*tmp;
+	uint32_t	i;
+
+	tmp = coord;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->coordinate[i])
+			i++;
+		if (i < 2)
+		{
+			ft_putstr_fd("Error reading the coordinates file: ", 2);
+			ft_putstr_fd("wrong coordinates\n", 2);
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 t_coords	*init_coords(t_coords **coords, char **data)
 {

@@ -1,6 +1,5 @@
 .vscode
 glfw
-MLX42
 *.o
 */*.o
 fdf

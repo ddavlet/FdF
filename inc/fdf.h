@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 16:45:48 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/03 18:44:47 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# include "../include/MLX42/MLX42_Int.h"
-# include "../include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42_Int.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include <limits.h>
 
 /*Standard definitions*/
@@ -101,6 +101,7 @@ mlx_image_t	*init_image(t_vars *vars);
 /*Coordinates functions*/
 t_coords	*init_coords(t_coords **coords, char **data);
 int			parse_coordinates(char *file_name, t_vars *vars);
+int			check_coordinates(t_coords *coord);
 
 /*Points functions*/
 void		init_isometrics(t_vars *vars,
