@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 17:18:02 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:59:06 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ uint32_t	limits(uint32_t num, uint32_t num2, uint32_t max)
 {
 	if (num < 15 && num2 < 15)
 		max = 300;
+	if (num > 100 || num2 > 100)
+		max = 600;
 	if (num2 >= num)
 		num = (uint32_t)(((float)num / (float)num2) * (float)max);
 	else

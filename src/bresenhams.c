@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:16:40 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 17:18:02 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:45:33 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	draw_column(t_vars *vars, t_coords *coords)
 	i = 1;
 	point = coords->points;
 	next_point = coords->next->points;
-	while (i <= vars->x && point)
+	while (i <= vars->x && point && next_point)
 	{
 		draw_column_slope(vars, point, next_point);
 		point = point->next;

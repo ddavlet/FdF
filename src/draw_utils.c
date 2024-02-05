@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:15 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 17:27:36 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:44:24 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	draw_column_slope(t_vars *vars, t_points *line, t_points *next_line)
 {
 	t_pixel	pixel;
 
+	if (!next_line || !line)
+		return ;
 	init_pixel(&pixel, line, next_line);
 	if (labs(pixel.d_x) > labs(pixel.d_y))
 		return (draw_line_slope(vars, line, next_line));

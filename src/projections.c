@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:59:26 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 18:27:31 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:17:45 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ uint32_t	iso_3(t_vars *vars, t_points *point, char axes)
 
 	rad = vars->angle * PI / 180;
 	x_iso = (uint32_t)((float)point->x + (float)point->y * cos(rad) + 1)
-		- vars->coords->points->x - cos(rad) * vars->ymin;
+		- cos(rad) * vars->ymin;
 	y_iso = (uint32_t)(((float)point->y + 1) * sin(rad) - (float)point->z
 			+ (float)vars->coords->points->x + (float)vars->zmax);
 	if (axes == 'x')

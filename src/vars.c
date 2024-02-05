@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:53:49 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 18:45:14 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:59:13 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ t_vars	*init_vars(char *file_name)
 		return (terminate_vars(&vars));
 	if (check_coordinates(vars->coords))
 		return (terminate_vars(&vars));
-	vars->width = limits(vars->x, vars->x, 800);
-	vars->height = limits(vars->y, vars->x, 600) / 1.8;
+	vars->width = limits(vars->x, vars->x, 400);
+	vars->height = limits(vars->y, vars->x, 400);
 	if (!init_pointcoord(&vars->coords, vars))
 		return (terminate_vars(&vars));
 	if (!init_window(vars))

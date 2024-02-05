@@ -6,7 +6,7 @@
 /*   By: ddavlety <ddavlety@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:23:31 by ddavlety          #+#    #+#             */
-/*   Updated: 2024/02/03 18:44:47 by ddavlety         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:44:35 by ddavlety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# include "../MLX42/include/MLX42/MLX42_Int.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42_Int.h"
+// # include "../MLX42/include/MLX42/MLX42.h"
 # include <limits.h>
 
 /*Standard definitions*/
